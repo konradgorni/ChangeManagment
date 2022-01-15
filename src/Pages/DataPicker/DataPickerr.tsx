@@ -6,19 +6,30 @@ import { useSelector } from 'react-redux';
 import { supabase } from '../../supabase/client';
 import { RootState } from '../../store/store';
 
-const DataPickerr = () => {
-  const [selectedDate, setSelectedDate] = useState<any>(null);
-  const [selectedDateEnd, setSelectedDateEnd] = useState<any>(null);
+interface dateObj {
+  date: string;
+  hours: string;
+  minutes: string;
+  month: string;
+  year: string;
+}
+type stateDateType = null | Date;
+
+const DataPicker = () => {
+  const [selectedDate, setSelectedDate] = useState<stateDateType>(new Date());
+  const [selectedDateEnd, setSelectedDateEnd] = useState<stateDateType>(
+    new Date(),
+  );
   const [title, setTitle] = useState<string>('');
   const user: any = useSelector((state: RootState) => state.auth.value);
 
-  async function sendToBase(start: any, end: any, t: any) {
+  async function sendToBase(start: dateObj, end: dateObj, eventTitle: string) {
     await supabase
       .from('schedule')
       .insert([
         {
           userId: user.id,
-          title: t,
+          title: eventTitle,
           startDate: start,
           endDate: end,
         },
@@ -26,7 +37,7 @@ const DataPickerr = () => {
       .single();
   }
 
-  const getObject = (data: any) => {
+  const getObjectToSend = (data: any) => {
     const time = moment(data).format('DD-MM-YYYY HH:mm');
     return {
       year: time.slice(6, 10),
@@ -38,8 +49,8 @@ const DataPickerr = () => {
   };
 
   const handleClick = () => {
-    const startObj = getObject(selectedDate);
-    const endObj = getObject(selectedDateEnd);
+    const startObj = getObjectToSend(selectedDate);
+    const endObj = getObjectToSend(selectedDateEnd);
     sendToBase(startObj, endObj, title);
   };
   return (
@@ -76,4 +87,4 @@ const DataPickerr = () => {
     </div>
   );
 };
-export default DataPickerr;
+export default DataPicker;

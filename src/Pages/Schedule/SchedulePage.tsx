@@ -18,13 +18,14 @@ const SchedulePage = () => {
   async function fetchPosts() {
     const { error, data } = await supabase
       .from('schedule')
-      .select('title,startDate,endDate')
+      .select('title,startDate,endDate,id')
       .eq('userId', user?.id)
       .order('id', { ascending: false });
     if (data !== null) {
       const newArray = data.map((el: any) => {
         const obj = {
           title: el.title,
+          id: el.id,
           start: new Date(
             el.startDate.year,
             el.startDate.month - 1,
@@ -40,14 +41,15 @@ const SchedulePage = () => {
             el.endDate.minutes,
           ),
         };
-        console.log(el.startDate);
-        console.log(obj);
         return obj;
       });
       setEvents(newArray);
-      console.log(newArray);
     }
   }
+
+  const handleSelect = (e: any) => {
+    console.log('handle', e);
+  };
   return (
     <div>
       <Calendar
@@ -56,6 +58,8 @@ const SchedulePage = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500 }}
+        onSelectEvent={(event: any) => console.log(event)}
+        views={['month', 'week', 'day']}
       />
     </div>
   );

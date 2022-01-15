@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,20 +8,20 @@ import {
 } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import { User } from '@supabase/supabase-js';
 import GlobalStyless from './styles/global';
 import ErrorPage from './Pages/ErrorPage/ErrorPage';
-import DataPickerr from './Pages/DataPicker/DataPickerr';
 import LoginPage from './Pages/Login/LoginPage';
 import RegisterPage from './Pages/Register/RegisterPage';
 import { RootState } from './store/store';
 import HomePage from './Pages/Home/HomePage';
 import Protected from './Pages/Protected';
 import SchedulePage from './Pages/Schedule/SchedulePage';
+import DataPicker from './Pages/DataPicker/DataPickerr';
 
 const App: React.FC = () => {
-  const user: any = useSelector((state: RootState) => state.auth.value);
-  const isLogged = user.aud === 'authenticated';
+  const user = useSelector((state: RootState) => state.auth.value);
+  const isLogged = user?.aud === 'authenticated';
+  console.log(user, 'czymjest');
   return (
     <Router>
       <div>
@@ -43,14 +43,17 @@ const App: React.FC = () => {
         <Routes>
           <Route
             path="/"
-            element={isLogged ? <Navigate to="/start" /> : <LoginPage />}
+            element={
+              isLogged ? <Navigate to="/start" /> : <Navigate to="/login" />
+            }
           />
           <Route path="/register" element={<RegisterPage />} />
-
+          <Route path="/login/:createdAccount" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route element={<Protected is={isLogged} />}>
             <Route path="/start" element={<HomePage />} />
             <Route path="/schedule" element={<SchedulePage />} />
-            <Route path="/datepicker" element={<DataPickerr />} />
+            <Route path="/datepicker" element={<DataPicker />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
