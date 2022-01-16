@@ -5,10 +5,12 @@ type payload = null | User;
 type EmptyObject = Record<any, never>;
 interface initialStateAuth {
   value: payload | Record<string, EmptyObject>;
+  isManager: boolean;
 }
 
 const initialState: initialStateAuth = {
   value: {},
+  isManager: false,
 };
 
 export const authSlice = createSlice({
@@ -18,8 +20,11 @@ export const authSlice = createSlice({
     saveUser: (state, action: PayloadAction<payload>) => {
       state.value = action.payload;
     },
+    updateManager: (state, action: PayloadAction<any>) => {
+      state.isManager = action.payload;
+    },
   },
 });
 
-export const { saveUser } = authSlice.actions;
+export const { saveUser, updateManager } = authSlice.actions;
 export default authSlice.reducer;

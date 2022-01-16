@@ -17,11 +17,12 @@ import HomePage from './Pages/Home/HomePage';
 import Protected from './Pages/Protected';
 import SchedulePage from './Pages/Schedule/SchedulePage';
 import DataPicker from './Pages/DataPicker/DataPickerr';
+import ManagerBoardPage from './Pages/ManagerBoard/ManagerBoardPage';
 
 const App: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.value);
-  const isLogged = user?.aud === 'authenticated';
-  console.log(user, 'czymjest');
+  const user = useSelector((state: RootState) => state.auth);
+  const isLogged = user.value?.aud === 'authenticated';
+  const { isManager } = user;
   return (
     <Router>
       <div>
@@ -36,6 +37,11 @@ const App: React.FC = () => {
                 <li>
                   <Link to="/datepicker">DatePicker</Link>
                 </li>
+                {isManager && (
+                  <li>
+                    <Link to="/managerboard">ManagerBoard</Link>
+                  </li>
+                )}
               </ul>
             </nav>
           )}
@@ -50,10 +56,13 @@ const App: React.FC = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login/:createdAccount" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route element={<Protected is={isLogged} />}>
+          <Route element={<Protected path="/" is={isLogged} />}>
             <Route path="/start" element={<HomePage />} />
             <Route path="/schedule" element={<SchedulePage />} />
             <Route path="/datepicker" element={<DataPicker />} />
+            <Route element={<Protected path="/managerboard" is={isManager} />}>
+              <Route path="/managerboard" element={<ManagerBoardPage />} />
+            </Route>
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

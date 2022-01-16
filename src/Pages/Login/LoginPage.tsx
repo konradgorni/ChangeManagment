@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../supabase/client';
-import { saveUser } from '../../store/slice/AuthSlice';
+import { saveUser, updateManager } from '../../store/slice/AuthSlice';
 import { StyledHeader, StyledWrapper } from './Login.styled';
 
 const LoginPage = () => {
@@ -17,12 +17,29 @@ const LoginPage = () => {
       isCreated(true);
     }
   }, [createdAccount]);
+
+  async function fetchDataUser(userId: string | undefined) {
+    try {
+      const { error, data } = await supabase
+        .from('users')
+        .select('isManager')
+        .eq('userId', userId);
+      if (error) return;
+      if (data !== null) {
+        dispatch(updateManager(data[0].isManager));
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
     try {
       const { user, error } = await supabase.auth.signIn({ email, password });
       if (error) return;
       dispatch(saveUser(user));
+      fetchDataUser(user?.id);
       navigate('/start');
     } catch (error) {
       alert(error.message);
