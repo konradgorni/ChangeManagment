@@ -2,88 +2,98 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
-import { supabase } from '../../supabase/client';
-import { RootState } from '../../store/store';
 
-interface dateObj {
-  date: string;
-  hours: string;
-  minutes: string;
-  month: string;
-  year: string;
-}
 type stateDateType = null | Date;
+interface timePicker {
+  hour: string;
+  min: string;
+}
+// TODO: datapicker props
+interface dataPickerProps {
+  setDataPickerData: any;
+}
 
-const DataPicker = () => {
-  const [selectedDate, setSelectedDate] = useState<stateDateType>(new Date());
-  const [selectedDateEnd, setSelectedDateEnd] = useState<stateDateType>(
-    new Date(),
-  );
-  const [title, setTitle] = useState<string>('');
-  const user: any = useSelector((state: RootState) => state.auth.value);
+const DataPicker = ({ setDataPickerData }: dataPickerProps) => {
+  const [selectedDate, setSelectedDate] = useState<stateDateType>();
+  const [startTimePicker, setStartTimePicker] = useState<timePicker>();
+  const [selectedDateEnd, setSelectedDateEnd] = useState<stateDateType>();
+  const [endTimePicker, setEndTimePicker] = useState<timePicker>();
 
-  async function sendToBase(start: dateObj, end: dateObj, eventTitle: string) {
-    await supabase
-      .from('schedule')
-      .insert([
-        {
-          userId: user.id,
-          title: eventTitle,
-          startDate: start,
-          endDate: end,
-        },
-      ])
-      .single();
-  }
+  useEffect(() => {
+    handleClick();
+  }, [startTimePicker, endTimePicker]);
 
-  const getObjectToSend = (data: any) => {
+  const getObjectToSend = (
+    data: Date | null | undefined,
+    hour: string | undefined,
+    min: string | undefined,
+  ) => {
     const time = moment(data).format('DD-MM-YYYY HH:mm');
     return {
       year: time.slice(6, 10),
       month: time.slice(3, 5),
       date: time.slice(0, 2),
-      hours: time.slice(11, 13),
-      minutes: time.slice(14, 16),
+      hours: hour,
+      minutes: min,
     };
   };
 
   const handleClick = () => {
-    const startObj = getObjectToSend(selectedDate);
-    const endObj = getObjectToSend(selectedDateEnd);
-    sendToBase(startObj, endObj, title);
+    const startObj = getObjectToSend(
+      selectedDate,
+      startTimePicker?.hour,
+      startTimePicker?.min,
+    );
+    const endObj = getObjectToSend(
+      selectedDateEnd,
+      endTimePicker?.hour,
+      endTimePicker?.min,
+    );
+    setDataPickerData({ startObj, endObj });
   };
+
   return (
     <div>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="title"
-      />
       <DatePicker
         selected={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
-        dateFormat="dd/MM/yyyy"
+        onChange={(date) => {
+          setSelectedDate(date);
+        }}
         minDate={new Date()}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        placeholderText="start"
+        dateFormat="dd/MM/yyyy"
+        placeholderText="start date"
       />
+      <input
+        type="time"
+        onChange={(e) => {
+          const obj = {
+            hour: e.target.value.slice(0, 2),
+            min: e.target.value.slice(3, 5),
+          };
+          setStartTimePicker(obj);
+        }}
+      />
+
       <DatePicker
         selected={selectedDateEnd}
-        onChange={(date) => setSelectedDateEnd(date)}
-        dateFormat="dd/MM/yyyy"
+        onChange={(date) => {
+          setSelectedDateEnd(date);
+          handleClick();
+        }}
         minDate={new Date()}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        placeholderText="end"
+        dateFormat="dd/MM/yyyy"
+        placeholderText="end date"
       />
-      <button type="submit" onClick={handleClick}>
-        Dodaj wydarzenie
-      </button>
+      <input
+        type="time"
+        onChange={(e) => {
+          const obj = {
+            hour: e.target.value.slice(0, 2),
+            min: e.target.value.slice(3, 5),
+          };
+          setEndTimePicker(obj);
+        }}
+      />
     </div>
   );
 };

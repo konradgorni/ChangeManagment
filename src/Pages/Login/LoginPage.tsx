@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../supabase/client';
 import { saveUser, updateManager } from '../../store/slice/AuthSlice';
 import { StyledHeader, StyledWrapper } from './Login.styled';
+import { fetchDataFromDataBase } from '../../utils/fetchDataFromDataBase';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -19,18 +20,14 @@ const LoginPage = () => {
   }, [createdAccount]);
 
   async function fetchDataUser(userId: string | undefined) {
-    try {
-      const { error, data } = await supabase
-        .from('users')
-        .select('isManager')
-        .eq('userId', userId);
-      if (error) return;
+    fetchDataFromDataBase('users', 'isManager', {
+      columnTitle: 'userId',
+      columnValue: userId,
+    }).then(({ data }) => {
       if (data !== null) {
         dispatch(updateManager(data[0].isManager));
       }
-    } catch (error) {
-      alert(error.message);
-    }
+    });
   }
 
   async function handleSubmit(e: any) {

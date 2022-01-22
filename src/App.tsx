@@ -34,9 +34,9 @@ const App: React.FC = () => {
                 <li>
                   <Link to="/schedule">Schedule</Link>
                 </li>
-                <li>
-                  <Link to="/datepicker">DatePicker</Link>
-                </li>
+                {/* <li> */}
+                {/*  <Link to="/datepicker">DatePicker</Link> */}
+                {/* </li> */}
                 {isManager && (
                   <li>
                     <Link to="/managerboard">ManagerBoard</Link>
@@ -59,7 +59,7 @@ const App: React.FC = () => {
           <Route element={<Protected path="/" is={isLogged} />}>
             <Route path="/start" element={<HomePage />} />
             <Route path="/schedule" element={<SchedulePage />} />
-            <Route path="/datepicker" element={<DataPicker />} />
+            {/* <Route path="/datepicker" element={<DataPicker />} /> */}
             <Route element={<Protected path="/managerboard" is={isManager} />}>
               <Route path="/managerboard" element={<ManagerBoardPage />} />
             </Route>

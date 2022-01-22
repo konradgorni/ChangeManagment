@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '@supabase/supabase-js';
 
 type payload = null | User;
-type EmptyObject = Record<any, never>;
+export type EmptyObject = Record<any, never>;
 interface initialStateAuth {
   value: payload | Record<string, EmptyObject>;
   isManager: boolean;
