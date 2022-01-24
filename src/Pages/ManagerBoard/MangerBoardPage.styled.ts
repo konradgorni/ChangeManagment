@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
   display: flex;
-  height: 100vh;
+  height: 70vh;
   width: 100%;
+  position: relative;
+`;
+export const StyledButton = styled.button`
+  width: 100px;
+  height: 90px;
 `;

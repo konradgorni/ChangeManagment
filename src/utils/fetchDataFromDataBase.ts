@@ -1,8 +1,10 @@
 import { supabase } from '../supabase/client';
 
-interface eqObject {
+// TODO: typy
+
+export interface eqObject {
   columnTitle: string;
-  columnValue: string | undefined;
+  columnValue: string | undefined | number;
 }
 export async function fetchDataFromDataBase(
   table: any,

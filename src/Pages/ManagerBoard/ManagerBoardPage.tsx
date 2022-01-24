@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import Select from 'react-select';
-import { StyledWrapper } from './MangerBoardPage.styled';
+import { StyledButton, StyledWrapper } from './MangerBoardPage.styled';
 import DataPicker from '../DataPicker/DataPickerr';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
@@ -18,6 +18,9 @@ import {
   IworkPlaceList,
   IEvents,
 } from './typesManagerBoard';
+import AddToScheduleModal from './AddToScheduleModal/AddToScheduleModal';
+import Custom from './Custom';
+import ConfirmDeleteEvent from './AddToScheduleModal/ConfirmDeleteEvent';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
@@ -29,11 +32,24 @@ const ManagerBoardPage = () => {
     IselectedWorker | EmptyObject
   >({});
   const [selectedWorkPlace, setSelectedWorkPlace] = useState<string>();
+  const [showAddToScheduleModal, setshowAddToScheduleModal] = useState<boolean>(
+    false,
+  );
+  const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState<boolean>(
+    false,
+  );
+  const [currentIdEvent, setCurrentIdEvent] = useState<number | undefined>(
+    undefined,
+  );
   useEffect(() => {
     workersListFetch(setWorkersList);
-    fetchEvents(setEvents);
+    fetchData();
     fetchWorkPlaces(setWorkPlaceList);
   }, []);
+
+  const fetchData = () => {
+    fetchEvents(setEvents);
+  };
 
   const handleAdd = () => {
     const obj = {
@@ -44,17 +60,36 @@ const ManagerBoardPage = () => {
       Name: selectedWorker.Name,
       Surname: selectedWorker.Surname,
     };
-    sendDataToDataBase('schedule', obj).then(() => fetchEvents(setEvents));
+    sendDataToDataBase('schedule', obj).then(() => fetchData());
   };
+  // const Test = (...props: any) => {
+  //   return (
+  //     <Custom
+  //       setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+  //       props={props}
+  //     />
+  //   );
+  // };
+  //
+  // const components = {
+  //   event: Test,
+  // };
+
+  const components = {
+    event: <Custom setShowConfirmDeleteModal={setShowConfirmDeleteModal} />,
+  };
+
   return (
     <StyledWrapper>
       <Calendar
+        components={components}
         localizer={localizer}
         events={events}
+        // onSelectSlot={(selinfo) => console.log(selinfo)}
+        onSelectEvent={({ id }) => setCurrentIdEvent(id)}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500, width: 700 }}
-        selectable
         view="day"
         views={{
           month: false,
@@ -62,23 +97,30 @@ const ManagerBoardPage = () => {
           week: false,
         }}
       />
-      <div>
-        <h1>Workers list</h1>
-        <Select
-          onChange={(item: any) => setSelectedWorker(item.value)}
-          options={workersList}
+      <StyledButton
+        onClick={() => setshowAddToScheduleModal(true)}
+        type="submit"
+      >
+        Add
+      </StyledButton>
+      {showAddToScheduleModal && (
+        <AddToScheduleModal
+          setSelectedWorker={setSelectedWorker}
+          workersList={workersList}
+          setSelectedWorkPlace={setSelectedWorkPlace}
+          workPlaceList={workPlaceList}
+          setDataPickerData={setDataPickerData}
+          handleAdd={handleAdd}
+          setshowAddToScheduleModal={setshowAddToScheduleModal}
         />
-        <h1>What position</h1>
-        <Select
-          onChange={(item: any) => setSelectedWorkPlace(item.value)}
-          options={workPlaceList}
+      )}
+      {showConfirmDeleteModal && (
+        <ConfirmDeleteEvent
+          currentIdEvent={currentIdEvent}
+          setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+          fetchData={fetchData}
         />
-        <h1>Work hours</h1>
-        <DataPicker setDataPickerData={setDataPickerData} />
-        <button type="submit" onClick={handleAdd}>
-          Add
-        </button>
-      </div>
+      )}
     </StyledWrapper>
   );
 };
