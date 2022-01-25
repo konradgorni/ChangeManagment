@@ -1,14 +1,17 @@
 import { supabase } from '../supabase/client';
 
-// TODO: typy
-
 export interface eqObject {
   columnTitle: string;
-  columnValue: string | undefined | number;
+  columnValue?: string | number;
 }
+
+// const isNumber = (arg: string | number): arg is number => {
+//   return typeof arg === 'number';
+// };
+
 export async function fetchDataFromDataBase(
-  table: any,
-  select: any,
+  table: string,
+  select: string,
   eq: eqObject = { columnTitle: '', columnValue: '' },
 ) {
   const { error, data } = await supabase

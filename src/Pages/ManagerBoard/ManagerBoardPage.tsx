@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import Select from 'react-select';
 import { StyledButton, StyledWrapper } from './MangerBoardPage.styled';
-import DataPicker from '../DataPicker/DataPickerr';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
 import {
@@ -19,8 +17,8 @@ import {
   IEvents,
 } from './typesManagerBoard';
 import AddToScheduleModal from './AddToScheduleModal/AddToScheduleModal';
-import Custom from './Custom';
 import ConfirmDeleteEvent from './AddToScheduleModal/ConfirmDeleteEvent';
+import CalendarCardEvent from './CalendarCardEvent';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
@@ -32,9 +30,10 @@ const ManagerBoardPage = () => {
     IselectedWorker | EmptyObject
   >({});
   const [selectedWorkPlace, setSelectedWorkPlace] = useState<string>();
-  const [showAddToScheduleModal, setshowAddToScheduleModal] = useState<boolean>(
-    false,
-  );
+  const [
+    showAddToScheduleModal,
+    setsShowAddToScheduleModal,
+  ] = useState<boolean>(false);
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState<boolean>(
     false,
   );
@@ -62,21 +61,17 @@ const ManagerBoardPage = () => {
     };
     sendDataToDataBase('schedule', obj).then(() => fetchData());
   };
-  // const Test = (...props: any) => {
-  //   return (
-  //     <Custom
-  //       setShowConfirmDeleteModal={setShowConfirmDeleteModal}
-  //       props={props}
-  //     />
-  //   );
-  // };
-  //
-  // const components = {
-  //   event: Test,
-  // };
+  const WrapperEvent = ({ title }: any) => {
+    return (
+      <CalendarCardEvent
+        setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+        title={title}
+      />
+    );
+  };
 
   const components = {
-    event: <Custom setShowConfirmDeleteModal={setShowConfirmDeleteModal} />,
+    event: WrapperEvent,
   };
 
   return (
@@ -85,7 +80,6 @@ const ManagerBoardPage = () => {
         components={components}
         localizer={localizer}
         events={events}
-        // onSelectSlot={(selinfo) => console.log(selinfo)}
         onSelectEvent={({ id }) => setCurrentIdEvent(id)}
         startAccessor="start"
         endAccessor="end"
@@ -98,7 +92,7 @@ const ManagerBoardPage = () => {
         }}
       />
       <StyledButton
-        onClick={() => setshowAddToScheduleModal(true)}
+        onClick={() => setsShowAddToScheduleModal(true)}
         type="submit"
       >
         Add
@@ -111,7 +105,7 @@ const ManagerBoardPage = () => {
           workPlaceList={workPlaceList}
           setDataPickerData={setDataPickerData}
           handleAdd={handleAdd}
-          setshowAddToScheduleModal={setshowAddToScheduleModal}
+          setsShowAddToScheduleModal={setsShowAddToScheduleModal}
         />
       )}
       {showConfirmDeleteModal && (

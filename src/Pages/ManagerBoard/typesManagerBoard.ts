@@ -19,15 +19,15 @@ export interface IselectedWorker {
   userId: string;
 }
 export interface IdataPickerDataObj {
-  hours: string;
-  minutes: string;
+  hours?: string;
+  minutes?: string;
   month: string;
   date: string;
   year: string;
 }
 export interface IdataPickerData {
-  endObj: IdataPickerDataObj | undefined;
-  startObj: IdataPickerDataObj | undefined;
+  endObj: IdataPickerDataObj;
+  startObj: IdataPickerDataObj;
 }
 
 export interface IEvents {

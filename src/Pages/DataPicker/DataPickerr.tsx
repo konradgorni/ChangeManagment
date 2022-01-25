@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import { IdataPickerData } from '../ManagerBoard/typesManagerBoard';
 
 type stateDateType = null | Date;
 interface timePicker {
   hour: string;
   min: string;
 }
-// TODO: datapicker props
 interface dataPickerProps {
-  setDataPickerData: any;
+  setDataPickerData: Dispatch<SetStateAction<IdataPickerData>>;
 }
 
 const DataPicker = ({ setDataPickerData }: dataPickerProps) => {

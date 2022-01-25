@@ -10,7 +10,7 @@ const AddToScheduleModal = ({
   workPlaceList,
   setDataPickerData,
   handleAdd,
-  setshowAddToScheduleModal,
+  setsShowAddToScheduleModal,
 }: any) => {
   return (
     <StyledWrapper>
@@ -30,7 +30,7 @@ const AddToScheduleModal = ({
         <button type="submit" onClick={handleAdd}>
           Add
         </button>
-        <button type="submit" onClick={() => setshowAddToScheduleModal(false)}>
+        <button type="submit" onClick={() => setsShowAddToScheduleModal(false)}>
           X
         </button>
       </div>
