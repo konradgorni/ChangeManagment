@@ -6,9 +6,16 @@ import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [surname, setSurname] = useState<string>('');
   const navigate = useNavigate();
   const sendToBase = (userId: string, isManager: boolean) => {
-    sendDataToDataBase('users', { userId, isManager }).then(() => {
+    sendDataToDataBase('users', {
+      userId,
+      isManager,
+      Name: name,
+      Surname: surname,
+    }).then(() => {
       navigate('/login/createdAccount');
     });
   };
@@ -34,6 +41,7 @@ const RegisterPage = () => {
       <input
         type="text"
         value={email}
+        placeholder="email"
         onChange={(e) => setEmail(e.target.value)}
       />
       <br />
@@ -41,8 +49,21 @@ const RegisterPage = () => {
       <br />
       <input
         type="password"
+        placeholder="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="text"
+        value={surname}
+        placeholder="surname"
+        onChange={(e) => setSurname(e.target.value)}
       />
       <button type="button" onClick={handleSubmit}>
         Register
