@@ -2,18 +2,30 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import { IdataPickerData } from '../ManagerBoard/typesManagerBoard';
+import { IeditData } from '../ManagerBoard/EditScheduleEventModal/EditScheduleEventModal';
+import {
+  DataPickerTypeEnum,
+  IdataPickerData,
+} from '../ManagerBoard/typesManagerBoard';
 
 type stateDateType = null | Date;
+
 interface timePicker {
-  hour: string;
-  min: string;
-}
-interface dataPickerProps {
-  setDataPickerData: Dispatch<SetStateAction<IdataPickerData>>;
+  hour?: string | undefined;
+  min?: string;
 }
 
-const DataPicker = ({ setDataPickerData }: dataPickerProps) => {
+interface dataPickerProps {
+  setDataPickerData: Dispatch<SetStateAction<IdataPickerData | undefined>>;
+  editData?: IeditData | null;
+  typeDataPicker?: DataPickerTypeEnum.ADD | DataPickerTypeEnum.EDIT;
+}
+
+const DataPicker = ({
+  setDataPickerData,
+  editData,
+  typeDataPicker,
+}: dataPickerProps) => {
   const [selectedDate, setSelectedDate] = useState<stateDateType>();
   const [startTimePicker, setStartTimePicker] = useState<timePicker>();
   const [selectedDateEnd, setSelectedDateEnd] = useState<stateDateType>();
@@ -22,6 +34,20 @@ const DataPicker = ({ setDataPickerData }: dataPickerProps) => {
   useEffect(() => {
     handleClick();
   }, [startTimePicker, endTimePicker]);
+  useEffect(() => {
+    if (typeDataPicker === DataPickerTypeEnum.EDIT) {
+      setSelectedDate(editData?.s);
+      setSelectedDateEnd(editData?.e);
+      setStartTimePicker({
+        hour: editData?.timeStart?.slice(0, 2),
+        min: editData?.timeStart?.slice(3, 5),
+      });
+      setEndTimePicker({
+        hour: editData?.timeEnd?.slice(0, 2),
+        min: editData?.timeEnd?.slice(3, 5),
+      });
+    }
+  }, [editData]);
 
   const getObjectToSend = (
     data: Date | null | undefined,
@@ -72,6 +98,7 @@ const DataPicker = ({ setDataPickerData }: dataPickerProps) => {
           };
           setStartTimePicker(obj);
         }}
+        value={`${startTimePicker?.hour}:${startTimePicker?.min}`}
       />
 
       <DatePicker
@@ -86,6 +113,7 @@ const DataPicker = ({ setDataPickerData }: dataPickerProps) => {
       />
       <input
         type="time"
+        value={`${endTimePicker?.hour}:${endTimePicker?.min}`}
         onChange={(e) => {
           const obj = {
             hour: e.target.value.slice(0, 2),

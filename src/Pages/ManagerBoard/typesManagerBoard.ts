@@ -36,3 +36,15 @@ export interface IEvents {
   start: Date;
   end: Date;
 }
+export interface IEventData {
+  title: string;
+  workPlace: string;
+  id: number;
+  userId: string;
+  start: Date;
+  end: Date;
+}
+export enum DataPickerTypeEnum {
+  ADD = 'ADD',
+  EDIT = 'EDIT',
+}

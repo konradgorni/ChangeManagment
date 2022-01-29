@@ -1,13 +1,14 @@
 import { Dispatch, SetStateAction } from 'react';
 import { fetchDataFromDataBase } from '../../utils/fetchDataFromDataBase';
 import { IEvents, IworkersList, IworkPlaceList } from './typesManagerBoard';
+import { updateEventScheduleRow } from '../../utils/updateEventScheduleRow';
 
 export const fetchEvents = async (
   setEvents: Dispatch<SetStateAction<IEvents[]>>,
 ) => {
   const { data, error } = await fetchDataFromDataBase(
     'schedule',
-    'workPlace,startDate,endDate,id,Name,Surname',
+    'workPlace,startDate,endDate,id,Name,Surname,userId',
   );
   if (data !== null) {
     const newArray = data.map(
@@ -18,10 +19,13 @@ export const fetchEvents = async (
         id: number;
         startDate: any;
         workPlace: string;
+        userId: string;
       }) => {
         const obj = {
           title: `${el.workPlace} - ${el.Name}${el.Surname}`,
+          workPlace: el.workPlace,
           id: el.id,
+          userId: el.userId,
           start: new Date(
             el.startDate.year,
             el.startDate.month - 1,
@@ -85,5 +89,14 @@ export const workersListFetch = async (
       return obj;
     });
     setWorkersList(newArray);
+  }
+};
+export const updateEventSchedule = async (updateDate: any, id: number) => {
+  const { data, error } = await updateEventScheduleRow('schedule', updateDate, {
+    columnTitle: 'id',
+    columnValue: id,
+  });
+  if (data !== null) {
+    console.log('TODOSTAJEPO UPDATE', data);
   }
 };

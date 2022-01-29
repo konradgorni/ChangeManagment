@@ -8,5 +8,5 @@ export const StyledWrapper = styled.div`
 `;
 export const StyledButton = styled.button`
   width: 100px;
-  height: 90px;
+  height: 35px;
 `;

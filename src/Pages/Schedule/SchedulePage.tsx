@@ -64,7 +64,7 @@ const SchedulePage = () => {
   };
 
   const handleSelect = (e: any) => {
-    console.log('handle', e);
+    // console.log('handle', e);
   };
   return (
     <div>
@@ -76,7 +76,7 @@ const SchedulePage = () => {
         style={{ height: 500 }}
         // onSelectEvent={(event: any) => console.log(event)}
         views={['month', 'week', 'day']}
-        onSelectSlot={(selinfo) => console.log(selinfo)}
+        // onSelectSlot={(selinfo) => console.log(selinfo)}
         selectable
       />
     </div>

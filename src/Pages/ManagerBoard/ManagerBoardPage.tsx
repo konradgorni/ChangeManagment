@@ -15,21 +15,18 @@ import {
   IworkersList,
   IworkPlaceList,
   IEvents,
+  IEventData,
 } from './typesManagerBoard';
 import AddToScheduleModal from './AddToScheduleModal/AddToScheduleModal';
 import ConfirmDeleteEvent from './AddToScheduleModal/ConfirmDeleteEvent';
 import CalendarCardEvent from './CalendarCardEvent';
+import EditScheduleEventModal from './EditScheduleEventModal/EditScheduleEventModal';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
-  const [events, setEvents] = useState<IEvents[]>([]);
-  const [workersList, setWorkersList] = useState<IworkersList[]>([]);
-  const [workPlaceList, setWorkPlaceList] = useState<IworkPlaceList[]>();
-  const [dataPickerData, setDataPickerData] = useState<IdataPickerData>();
-  const [selectedWorker, setSelectedWorker] = useState<
-    IselectedWorker | EmptyObject
-  >({});
-  const [selectedWorkPlace, setSelectedWorkPlace] = useState<string>();
+  const [showEditScheduleModal, setShowEditScheduleModal] = useState<boolean>(
+    false,
+  );
   const [
     showAddToScheduleModal,
     setsShowAddToScheduleModal,
@@ -37,9 +34,23 @@ const ManagerBoardPage = () => {
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState<boolean>(
     false,
   );
+
+  const [events, setEvents] = useState<IEvents[]>([]);
+  const [workersList, setWorkersList] = useState<IworkersList[]>([]);
+  const [workPlaceList, setWorkPlaceList] = useState<IworkPlaceList[]>();
+  const [dataPickerData, setDataPickerData] = useState<IdataPickerData>();
+  const [selectedWorker, setSelectedWorker] = useState<
+    IselectedWorker | EmptyObject | null
+  >({});
+  const [selectedWorkPlace, setSelectedWorkPlace] = useState<string>();
+
   const [currentIdEvent, setCurrentIdEvent] = useState<number | undefined>(
     undefined,
   );
+  const [currentEditEventData, setCurrentEditEventData] = useState<
+    IEventData | EmptyObject
+  >({});
+
   useEffect(() => {
     workersListFetch(setWorkersList);
     fetchData();
@@ -52,26 +63,58 @@ const ManagerBoardPage = () => {
 
   const handleAdd = () => {
     const obj = {
-      userId: selectedWorker.userId,
+      userId: selectedWorker?.userId,
       startDate: dataPickerData?.startObj,
       endDate: dataPickerData?.endObj,
       workPlace: selectedWorkPlace,
-      Name: selectedWorker.Name,
-      Surname: selectedWorker.Surname,
+      Name: selectedWorker?.Name,
+      Surname: selectedWorker?.Surname,
     };
     sendDataToDataBase('schedule', obj).then(() => fetchData());
   };
-  const WrapperEvent = ({ title }: any) => {
+  const WrapperEvent = (props: any) => {
+    const { title, event } = props;
     return (
       <CalendarCardEvent
         setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+        setShowEditScheduleModal={setShowEditScheduleModal}
         title={title}
+        setCurrentEditEventData={setCurrentEditEventData}
+        event={event}
       />
+    );
+  };
+
+  const CustomToolbar = (props: any) => {
+    const { label } = props;
+    const handleNext = () => {
+      props.onNavigate('NEXT');
+    };
+    const handlePrev = () => {
+      props.onNavigate('PREV');
+    };
+    return (
+      <div>
+        <StyledButton
+          onClick={() => setsShowAddToScheduleModal(true)}
+          type="submit"
+        >
+          Add
+        </StyledButton>
+        <h2>{label}</h2>
+        <button onClick={handlePrev} type="submit">
+          prev
+        </button>
+        <button onClick={handleNext} type="submit">
+          NEXT
+        </button>
+      </div>
     );
   };
 
   const components = {
     event: WrapperEvent,
+    toolbar: CustomToolbar,
   };
 
   return (
@@ -83,20 +126,9 @@ const ManagerBoardPage = () => {
         onSelectEvent={({ id }) => setCurrentIdEvent(id)}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500, width: 700 }}
-        view="day"
-        views={{
-          month: false,
-          day: true,
-          week: false,
-        }}
+        style={{ height: '100%', width: '100%' }}
+        defaultView="day"
       />
-      <StyledButton
-        onClick={() => setsShowAddToScheduleModal(true)}
-        type="submit"
-      >
-        Add
-      </StyledButton>
       {showAddToScheduleModal && (
         <AddToScheduleModal
           setSelectedWorker={setSelectedWorker}
@@ -112,6 +144,15 @@ const ManagerBoardPage = () => {
         <ConfirmDeleteEvent
           currentIdEvent={currentIdEvent}
           setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+          fetchData={fetchData}
+        />
+      )}
+      {showEditScheduleModal && (
+        <EditScheduleEventModal
+          workersList={workersList}
+          workPlaceList={workPlaceList}
+          setShowEditScheduleModal={setShowEditScheduleModal}
+          currentEditEventData={currentEditEventData}
           fetchData={fetchData}
         />
       )}
