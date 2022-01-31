@@ -44,32 +44,9 @@ export const StyledButton = styled.button`
   font-weight: bold;
   border: none;
   display: block;
+  margin: 20px auto 0 auto;
   width: 130px;
   font-size: 25px;
   height: 45px;
   cursor: pointer;
-  margin: 20px auto 0 auto;
-`;
-export const StyledInfoRegister = styled.p`
-  display: block;
-  color: white;
-  margin-top: 15px;
-  font-size: 15px;
-  button {
-    border: none;
-    background-color: transparent;
-    color: #fab700;
-    padding-left: 5px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-`;
-export const StyledErrorMesage = styled.p`
-  color: red;
-  margin: 5px 0;
-`;
-export const StyledAccountCreatedInfo = styled.h2`
-  color: white;
-  font-size: 35px;
-  margin-bottom: 15px;
 `;

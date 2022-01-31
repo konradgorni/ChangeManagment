@@ -1,15 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { supabase } from '../../supabase/client';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
+import { StyledWrapper, StyledHeader } from './Register.styled';
+import {
+  StyledButton,
+  StyledErrorMesage,
+  StyledInput,
+  StyledLabel,
+} from '../Login/Login.styled';
+
+const schema = yup
+  .object({
+    email: yup.string().email('Invalid email format').required(),
+    password: yup.string().required(),
+    name: yup.string().required(),
+    surname: yup.string().required(),
+  })
+  .required();
+
+interface handleRegisterData {
+  email: string;
+  password: string;
+  name: string;
+  surname: string;
+}
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [surname, setSurname] = useState<string>('');
   const navigate = useNavigate();
-  const sendToBase = (userId: string, isManager: boolean) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const sendToBase = (
+    userId: string,
+    isManager: boolean,
+    name: string,
+    surname: string,
+  ) => {
     sendDataToDataBase('users', {
       userId,
       isManager,
@@ -20,55 +55,50 @@ const RegisterPage = () => {
     });
   };
 
-  async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  const handleRegister = async (data: any) => {
+    const { email, password, name, surname } = data;
     try {
       const { error, user } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
       if (user?.aud === 'authenticated') {
-        sendToBase(user.id, false);
+        sendToBase(user.id, false, name, surname);
       }
     } catch (error) {
       alert(error.message);
     }
-  }
+  };
   // TODO dodanie imienia i nazwiska do wysylki
   return (
-    <div>
-      <h1>Register</h1>
-      Email:
-      <br />
-      <input
-        type="text"
-        value={email}
-        placeholder="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <br />
-      Password:
-      <br />
-      <input
-        type="password"
-        placeholder="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="text"
-        value={surname}
-        placeholder="surname"
-        onChange={(e) => setSurname(e.target.value)}
-      />
-      <button type="button" onClick={handleSubmit}>
-        Register
-      </button>
-    </div>
+    <StyledWrapper>
+      <StyledHeader>Register</StyledHeader>
+      <form onSubmit={handleSubmit(handleRegister)}>
+        <StyledLabel htmlFor="email">
+          <h3>Email</h3>
+          <StyledInput type="email" id="test" {...register('email')} />
+        </StyledLabel>
+        <StyledErrorMesage>{errors.email?.message}</StyledErrorMesage>
+        <StyledLabel htmlFor="password">
+          <h3>Password</h3>
+          <StyledInput
+            type="password"
+            id="password"
+            {...register('password')}
+          />
+          <StyledErrorMesage>{errors.password?.message}</StyledErrorMesage>
+        </StyledLabel>
+        <StyledLabel htmlFor="name">
+          <h3>Name</h3>
+          <StyledInput type="text" id="name" {...register('name')} />
+        </StyledLabel>
+        <StyledErrorMesage>{errors.name?.message}</StyledErrorMesage>
+        <StyledLabel htmlFor="surname">
+          <h3>Surname</h3>
+          <StyledInput type="text" id="surname" {...register('surname')} />
+        </StyledLabel>
+        <StyledErrorMesage>{errors.surname?.message}</StyledErrorMesage>
+        <StyledButton type="submit">Submit</StyledButton>
+      </form>
+    </StyledWrapper>
   );
 };
 

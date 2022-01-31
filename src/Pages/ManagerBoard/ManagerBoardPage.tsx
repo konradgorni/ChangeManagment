@@ -61,6 +61,10 @@ const ManagerBoardPage = () => {
     fetchEvents(setEvents);
   };
 
+  useEffect(() => {
+    console.log(events);
+  }, [events]);
+
   const handleAdd = () => {
     const obj = {
       userId: selectedWorker?.userId,
