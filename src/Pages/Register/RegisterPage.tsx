@@ -35,7 +35,7 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<handleRegisterData>({
     resolver: yupResolver(schema),
   });
 
@@ -55,7 +55,7 @@ const RegisterPage = () => {
     });
   };
 
-  const handleRegister = async (data: any) => {
+  const handleRegister = async (data: handleRegisterData) => {
     const { email, password, name, surname } = data;
     try {
       const { error, user } = await supabase.auth.signUp({ email, password });
@@ -67,7 +67,6 @@ const RegisterPage = () => {
       alert(error.message);
     }
   };
-  // TODO dodanie imienia i nazwiska do wysylki
   return (
     <StyledWrapper>
       <StyledHeader>Register</StyledHeader>

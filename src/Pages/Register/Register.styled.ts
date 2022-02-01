@@ -5,6 +5,7 @@ export const StyledHeader = styled.h1`
   font-weight: 600;
   font-size: 62px;
 `;
+// TODO DON'T DUPLICATE STYLE FOR LOGIN AND REGISTER STYLED
 export const StyledWrapper = styled.div`
   display: flex;
   height: 100vh;

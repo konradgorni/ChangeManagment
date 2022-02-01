@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { supabase } from '../../supabase/client';
@@ -24,6 +24,10 @@ const schema = yup
     password: yup.string().required(),
   })
   .required();
+interface handleLogInData {
+  email: string;
+  password: string;
+}
 const LoginPage = () => {
   const [created, isCreated] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -33,7 +37,7 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<handleLogInData>({
     resolver: yupResolver(schema),
   });
 
@@ -60,11 +64,8 @@ const LoginPage = () => {
       }
     });
   }
-  interface handleLogInData {
-    email: string;
-    password: string;
-  }
-  const handleLogIn = async (data: any) => {
+
+  const handleLogIn = async (data: handleLogInData) => {
     const { email, password } = data;
     try {
       const { user, error } = await supabase.auth.signIn({ email, password });
@@ -76,7 +77,7 @@ const LoginPage = () => {
       alert(error.message);
     }
   };
-  // TODO zmiana created po uplywie 5 sekund dodac.
+
   return (
     <StyledWrapper>
       {created && (
