@@ -1,22 +1,13 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { IEventData } from './typesManagerBoard';
-import { EmptyObject } from '../../store/slice/AuthSlice';
+import { IEventData } from '../../typesManagerBoard';
+import { EmptyObject } from '../../../../store/slice/AuthSlice';
 
-export interface Ievent {
-  title: string;
-  workPlace: string;
-  id: number;
-  userId: string;
-  start: Date;
-  end: Date;
-}
-// TODO EVENT TYPE
 interface CalendarCardEventProps {
   setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
   title: string;
   setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
   setCurrentEditEventData: Dispatch<SetStateAction<IEventData | EmptyObject>>;
-  event: any;
+  event: IEventData;
 }
 
 const CalendarCardEvent = ({
@@ -31,7 +22,15 @@ const CalendarCardEvent = ({
   };
   const handleEdit = () => {
     setShowEditScheduleModal(true);
-    setCurrentEditEventData(event);
+    const obj = {
+      title: event.title,
+      workPlace: event.workPlace,
+      id: event.id,
+      userId: event.userId,
+      start: event.start,
+      end: event.end,
+    };
+    setCurrentEditEventData(obj);
   };
   return (
     <div>

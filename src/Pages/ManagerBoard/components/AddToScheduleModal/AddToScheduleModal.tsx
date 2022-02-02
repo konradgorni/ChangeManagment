@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import Select from 'react-select';
-import DataPicker from '../../DataPicker/DataPickerr';
+import DataPicker from '../../../DataPicker/DataPicker';
 import { StyledWrapper } from './AddToScheduleModal.styled';
 import {
   DataPickerTypeEnum,
@@ -8,8 +8,8 @@ import {
   IselectedWorker,
   IworkersList,
   IworkPlaceList,
-} from '../typesManagerBoard';
-import { EmptyObject } from '../../../store/slice/AuthSlice';
+} from '../../typesManagerBoard';
+import { EmptyObject } from '../../../../store/slice/AuthSlice';
 
 interface AddToScheduleModalProps {
   setSelectedWorker: Dispatch<

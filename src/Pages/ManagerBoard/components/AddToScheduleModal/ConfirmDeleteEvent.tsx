@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { StyledWrapper } from './ConfirmDeleteEvent.styled';
-import { deleteElementFromDataBase } from '../../../utils/deleteElementFromDataBase';
+import { deleteElementFromDataBase } from '../../../../utils/deleteElementFromDataBase';
 
 interface ConfirmDeleteEventProps {
   currentIdEvent: number | undefined;

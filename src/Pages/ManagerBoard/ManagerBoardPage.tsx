@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer, ToolbarProps } from 'react-big-calendar';
 import moment from 'moment';
-import { StyledButton, StyledWrapper } from './MangerBoardPage.styled';
+import { StyledWrapper } from './MangerBoardPage.styled';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
-import {
-  fetchEvents,
-  fetchWorkPlaces,
-  workersListFetch,
-} from './utilsFunctionManagerBoard';
 import {
   IdataPickerData,
   IselectedWorker,
@@ -17,10 +12,14 @@ import {
   IEvents,
   IEventData,
 } from './typesManagerBoard';
-import AddToScheduleModal from './AddToScheduleModal/AddToScheduleModal';
-import ConfirmDeleteEvent from './AddToScheduleModal/ConfirmDeleteEvent';
-import CalendarCardEvent from './CalendarCardEvent';
-import EditScheduleEventModal from './EditScheduleEventModal/EditScheduleEventModal';
+import AddToScheduleModal from './components/AddToScheduleModal/AddToScheduleModal';
+import ConfirmDeleteEvent from './components/AddToScheduleModal/ConfirmDeleteEvent';
+import EditScheduleEventModal from './components/EditScheduleEventModal/EditScheduleEventModal';
+import { fetchEvents } from './utils/fetchEvents';
+import { fetchWorkPlaces } from './utils/fetchWorkPlaces';
+import { workersListFetch } from './utils/workersListFetch';
+import WrapperEvents from './components/WrapperEvents/WrapperEvents';
+import CustomToolbar from './components/CustomToolbar/CustomToolbar';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
@@ -60,11 +59,6 @@ const ManagerBoardPage = () => {
   const fetchData = () => {
     fetchEvents(setEvents);
   };
-
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
-
   const handleAdd = () => {
     const obj = {
       userId: selectedWorker?.userId,
@@ -76,49 +70,23 @@ const ManagerBoardPage = () => {
     };
     sendDataToDataBase('schedule', obj).then(() => fetchData());
   };
-  const WrapperEvent = (props: any) => {
-    const { title, event } = props;
-    return (
-      <CalendarCardEvent
-        setShowConfirmDeleteModal={setShowConfirmDeleteModal}
-        setShowEditScheduleModal={setShowEditScheduleModal}
-        title={title}
-        setCurrentEditEventData={setCurrentEditEventData}
-        event={event}
-      />
-    );
-  };
-
-  const CustomToolbar = (props: any) => {
-    const { label } = props;
-    const handleNext = () => {
-      props.onNavigate('NEXT');
-    };
-    const handlePrev = () => {
-      props.onNavigate('PREV');
-    };
-    return (
-      <div>
-        <StyledButton
-          onClick={() => setsShowAddToScheduleModal(true)}
-          type="submit"
-        >
-          Add
-        </StyledButton>
-        <h2>{label}</h2>
-        <button onClick={handlePrev} type="submit">
-          prev
-        </button>
-        <button onClick={handleNext} type="submit">
-          NEXT
-        </button>
-      </div>
-    );
-  };
 
   const components = {
-    event: WrapperEvent,
-    toolbar: CustomToolbar,
+    event: ({ event, title }: { event: IEventData; title: string }) => (
+      <WrapperEvents
+        setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+        setShowEditScheduleModal={setShowEditScheduleModal}
+        setCurrentEditEventData={setCurrentEditEventData}
+        event={event}
+        title={title}
+      />
+    ),
+    toolbar: (props: ToolbarProps) => (
+      <CustomToolbar
+        props={props}
+        setsShowAddToScheduleModal={setsShowAddToScheduleModal}
+      />
+    ),
   };
 
   return (
@@ -127,7 +95,7 @@ const ManagerBoardPage = () => {
         components={components}
         localizer={localizer}
         events={events}
-        onSelectEvent={({ id }) => setCurrentIdEvent(id)}
+        onSelectEvent={({ id }: { id: number }) => setCurrentIdEvent(id)}
         startAccessor="start"
         endAccessor="end"
         style={{ height: '100%', width: '100%' }}

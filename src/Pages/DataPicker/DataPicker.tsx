@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import { IeditData } from '../ManagerBoard/EditScheduleEventModal/EditScheduleEventModal';
+import { IeditData } from '../ManagerBoard/components/EditScheduleEventModal/EditScheduleEventModal';
 import {
   DataPickerTypeEnum,
   IdataPickerData,

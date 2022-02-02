@@ -35,6 +35,8 @@ export interface IEvents {
   id: number;
   start: Date;
   end: Date;
+  userId: string;
+  workPlace: string;
 }
 export interface IEventData {
   title: string;
@@ -48,3 +50,5 @@ export enum DataPickerTypeEnum {
   ADD = 'ADD',
   EDIT = 'EDIT',
 }
+
+export type fetchWorkPlacesType = IworkPlaceList[] | undefined;

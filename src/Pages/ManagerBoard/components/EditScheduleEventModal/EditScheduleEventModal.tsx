@@ -2,15 +2,15 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import moment from 'moment';
 import { StyledWrapper } from './EditScheduleEventModal.styled';
-import { EmptyObject } from '../../../store/slice/AuthSlice';
-import DataPicker from '../../DataPicker/DataPickerr';
+import { EmptyObject } from '../../../../store/slice/AuthSlice';
+import DataPicker from '../../../DataPicker/DataPicker';
 import {
   DataPickerTypeEnum,
   IEventData,
   IworkersList,
   IworkPlaceList,
-} from '../typesManagerBoard';
-import { updateEventSchedule } from '../utilsFunctionManagerBoard';
+} from '../../typesManagerBoard';
+import { updateEventSchedule } from '../../utils/updateEventSchedule';
 
 export interface IeditData {
   e?: Date;
@@ -41,6 +41,10 @@ const EditScheduleEventModal = ({
   const [editData, setEditData] = useState<
     IeditData | EmptyObject | undefined
   >();
+
+  useEffect(() => {
+    console.log(selectedWorker);
+  }, [selectedWorker]);
 
   useEffect(() => {
     const { userId, workPlace, start, end, id } = currentEditEventData;

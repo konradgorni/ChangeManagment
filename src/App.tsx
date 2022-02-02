@@ -17,6 +17,7 @@ import HomePage from './Pages/Home/HomePage';
 import Protected from './Pages/Protected';
 import SchedulePage from './Pages/Schedule/SchedulePage';
 import ManagerBoardPage from './Pages/ManagerBoard/ManagerBoardPage';
+import Nav from './components/Nav/Nav';
 
 const App: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth);
@@ -26,22 +27,7 @@ const App: React.FC = () => {
     <Router>
       <div>
         <GlobalStyless />
-        <div>
-          {isLogged && (
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/schedule">Schedule</Link>
-                </li>
-                {isManager && (
-                  <li>
-                    <Link to="/managerboard">ManagerBoard</Link>
-                  </li>
-                )}
-              </ul>
-            </nav>
-          )}
-        </div>
+        {isLogged && <Nav isLogged={isLogged} isManager={isManager} />}
         <Routes>
           <Route
             path="/"
