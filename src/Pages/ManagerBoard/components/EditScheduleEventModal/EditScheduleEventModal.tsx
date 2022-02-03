@@ -6,6 +6,7 @@ import { EmptyObject } from '../../../../store/slice/AuthSlice';
 import DataPicker from '../../../DataPicker/DataPicker';
 import {
   DataPickerTypeEnum,
+  IdataPickerData,
   IEventData,
   IworkersList,
   IworkPlaceList,
@@ -34,17 +35,20 @@ const EditScheduleEventModal = ({
   currentEditEventData,
   fetchData,
 }: EditScheduleEventModalProps) => {
-  const [selectedWorker, setSelectedWorker] = useState<any>({});
-  const [selectedWorkPlace, setSelectedWorkPlace] = useState<any>();
-  const [dataPickerData, setDataPickerData] = useState<any>();
+  const [selectedWorker, setSelectedWorker] = useState<IworkersList | null>(
+    null,
+  );
+  const [
+    selectedWorkPlace,
+    setSelectedWorkPlace,
+  ] = useState<IworkPlaceList | null>(null);
+  const [dataPickerData, setDataPickerData] = useState<
+    IdataPickerData | undefined
+  >();
   const [eventId, setEventId] = useState<number>(0);
   const [editData, setEditData] = useState<
     IeditData | EmptyObject | undefined
   >();
-
-  useEffect(() => {
-    console.log(selectedWorker);
-  }, [selectedWorker]);
 
   useEffect(() => {
     const { userId, workPlace, start, end, id } = currentEditEventData;
@@ -64,24 +68,28 @@ const EditScheduleEventModal = ({
       ),
     };
     setEditData(obj);
-    const findEmployee = workersList.filter(
-      (el: any) => el.value.userId === userId,
-    );
-    setSelectedWorker(findEmployee[0]);
-    const findWorkStation = workPlaceList?.filter(
-      (el: any) => el.value === workPlace,
-    );
-    setSelectedWorkPlace(findWorkStation);
+    if (workersList) {
+      const findEmployee = workersList.filter(
+        (el: IworkersList) => el.value.userId === userId,
+      );
+      setSelectedWorker(findEmployee[0]);
+    }
+    if (workPlaceList) {
+      const findWorkStation = workPlaceList?.filter(
+        (el: IworkPlaceList) => el.value === workPlace,
+      );
+      setSelectedWorkPlace(findWorkStation[0]);
+    }
   }, []);
 
   const handleSave = () => {
     const obj = {
-      userId: selectedWorker.value.userId,
-      Name: selectedWorker.value.Name,
-      Surname: selectedWorker.value.Surname,
-      workPlace: selectedWorkPlace.value,
-      startDate: dataPickerData.startObj,
-      endDate: dataPickerData.endObj,
+      userId: selectedWorker?.value.userId,
+      Name: selectedWorker?.value.Name,
+      Surname: selectedWorker?.value.Surname,
+      workPlace: selectedWorkPlace?.value,
+      startDate: dataPickerData?.startObj,
+      endDate: dataPickerData?.endObj,
     };
     updateEventSchedule(obj, eventId).then(() => {
       fetchData();
