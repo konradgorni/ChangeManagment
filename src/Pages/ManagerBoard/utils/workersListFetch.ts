@@ -10,17 +10,19 @@ export const workersListFetch = async (
     'userId,Name,Surname',
   );
   if (data !== null) {
-    const newArray = data.map((el: any) => {
-      const obj = {
-        value: {
-          userId: el.userId,
-          Name: el.Name,
-          Surname: el.Surname,
-        },
-        label: `${el.Name} ${el.Surname}`,
-      };
-      return obj;
-    });
+    const newArray = data.map(
+      (el: { Name: string; Surname: string; userId: string }) => {
+        const obj = {
+          value: {
+            userId: el.userId,
+            Name: el.Name,
+            Surname: el.Surname,
+          },
+          label: `${el.Name} ${el.Surname}`,
+        };
+        return obj;
+      },
+    );
     setWorkersList(newArray);
   }
 };

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import { IEvents } from '../typesManagerBoard';
 import { fetchDataFromDataBase } from '../../../utils/fetchDataFromDataBase';
+import { IEvents } from '../typesManagerBoard';
 
 export const fetchEvents = async (
   setEvents: Dispatch<SetStateAction<IEvents[]>>,
