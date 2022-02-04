@@ -7,11 +7,11 @@ import { supabase } from '../../supabase/client';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { StyledWrapper, StyledHeader } from './Register.styled';
 import {
-  StyledButton,
   StyledErrorMesage,
   StyledInput,
   StyledLabel,
 } from '../Login/Login.styled';
+import { StyledButton } from '../../styles/globalStylesComponents.styled';
 
 const schema = yup
   .object({
@@ -95,7 +95,9 @@ const RegisterPage = () => {
           <StyledInput type="text" id="surname" {...register('surname')} />
         </StyledLabel>
         <StyledErrorMesage>{errors.surname?.message}</StyledErrorMesage>
-        <StyledButton type="submit">Submit</StyledButton>
+        <StyledButton margin="20px auto 0 auto" type="submit">
+          Submit
+        </StyledButton>
       </form>
     </StyledWrapper>
   );

@@ -98,7 +98,7 @@ const ManagerBoardPage = () => {
         onSelectEvent={({ id }: { id: number }) => setCurrentIdEvent(id)}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: '95vh', width: '100%' }}
         defaultView="day"
       />
       {showAddToScheduleModal && (

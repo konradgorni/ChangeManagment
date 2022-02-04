@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { supabase } from '../../supabase/client';
 import { saveUser, updateManager } from '../../store/slice/AuthSlice';
 import {
   StyledAccountCreatedInfo,
-  StyledButton,
   StyledErrorMesage,
   StyledHeader,
   StyledInfoRegister,
@@ -17,6 +16,7 @@ import {
   StyledWrapper,
 } from './Login.styled';
 import { fetchDataFromDataBase } from '../../utils/fetchDataFromDataBase';
+import { StyledButton } from '../../styles/globalStylesComponents.styled';
 
 const schema = yup
   .object({
@@ -103,7 +103,9 @@ const LoginPage = () => {
         </StyledLabel>
         <StyledErrorMesage>{errors.password?.message}</StyledErrorMesage>
 
-        <StyledButton type="submit">Log In</StyledButton>
+        <StyledButton margin="20px auto 0 auto" type="submit">
+          Log In
+        </StyledButton>
       </form>
       <StyledInfoRegister>
         If you do not have account

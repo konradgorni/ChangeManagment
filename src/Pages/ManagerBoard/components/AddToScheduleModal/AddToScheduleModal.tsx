@@ -1,7 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import Select from 'react-select';
 import DataPicker from '../../../DataPicker/DataPicker';
-import { StyledWrapper } from './AddToScheduleModal.styled';
+import {
+  StyledButtonWrapper,
+  StyledWrapper,
+} from './AddToScheduleModal.styled';
 import {
   DataPickerTypeEnum,
   IdataPickerData,
@@ -10,6 +13,7 @@ import {
   IworkPlaceList,
 } from '../../typesManagerBoard';
 import { EmptyObject } from '../../../../store/slice/AuthSlice';
+import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 
 interface AddToScheduleModalProps {
   setSelectedWorker: Dispatch<
@@ -56,12 +60,18 @@ const AddToScheduleModal = ({
           setDataPickerData={setDataPickerData}
           typeDataPicker={DataPickerTypeEnum.ADD}
         />
-        <button type="submit" onClick={handleAdd}>
-          Add
-        </button>
-        <button type="submit" onClick={() => setsShowAddToScheduleModal(false)}>
-          X
-        </button>
+        <StyledButtonWrapper>
+          <StyledButton type="submit" onClick={handleAdd}>
+            Add
+          </StyledButton>
+          <StyledButton
+            background="red"
+            type="submit"
+            onClick={() => setsShowAddToScheduleModal(false)}
+          >
+            X
+          </StyledButton>
+        </StyledButtonWrapper>
       </div>
     </StyledWrapper>
   );

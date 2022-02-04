@@ -1,7 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import moment from 'moment';
-import { StyledWrapper } from './EditScheduleEventModal.styled';
+import {
+  StyledButtonWrapper,
+  StyledWrapper,
+} from './EditScheduleEventModal.styled';
 import { EmptyObject } from '../../../../store/slice/AuthSlice';
 import DataPicker from '../../../DataPicker/DataPicker';
 import {
@@ -12,6 +15,7 @@ import {
   IworkPlaceList,
 } from '../../typesManagerBoard';
 import { updateEventSchedule } from '../../utils/updateEventSchedule';
+import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 
 export interface IeditData {
   e?: Date;
@@ -117,12 +121,18 @@ const EditScheduleEventModal = ({
           editData={editData}
           setDataPickerData={setDataPickerData}
         />
-        <button type="submit" onClick={handleSave}>
-          Save
-        </button>
-        <button type="submit" onClick={() => setShowEditScheduleModal(false)}>
-          X
-        </button>
+        <StyledButtonWrapper>
+          <StyledButton type="submit" onClick={handleSave}>
+            Save
+          </StyledButton>
+          <StyledButton
+            background="red"
+            type="submit"
+            onClick={() => setShowEditScheduleModal(false)}
+          >
+            X
+          </StyledButton>
+        </StyledButtonWrapper>
       </div>
     </StyledWrapper>
   );

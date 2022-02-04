@@ -7,6 +7,7 @@ import {
   DataPickerTypeEnum,
   IdataPickerData,
 } from '../ManagerBoard/typesManagerBoard';
+import { StyledDateWrapper, StyledWrapper } from './DataPicker.styled';
 
 type stateDateType = null | Date;
 
@@ -79,50 +80,53 @@ const DataPicker = ({
   };
 
   return (
-    <div>
-      <DatePicker
-        selected={selectedDate}
-        onChange={(date) => {
-          setSelectedDate(date);
-        }}
-        minDate={new Date()}
-        dateFormat="dd/MM/yyyy"
-        placeholderText="start date"
-      />
-      <input
-        type="time"
-        onChange={(e) => {
-          const obj = {
-            hour: e.target.value.slice(0, 2),
-            min: e.target.value.slice(3, 5),
-          };
-          setStartTimePicker(obj);
-        }}
-        value={`${startTimePicker?.hour}:${startTimePicker?.min}`}
-      />
-
-      <DatePicker
-        selected={selectedDateEnd}
-        onChange={(date) => {
-          setSelectedDateEnd(date);
-          handleClick();
-        }}
-        minDate={new Date()}
-        dateFormat="dd/MM/yyyy"
-        placeholderText="end date"
-      />
-      <input
-        type="time"
-        value={`${endTimePicker?.hour}:${endTimePicker?.min}`}
-        onChange={(e) => {
-          const obj = {
-            hour: e.target.value.slice(0, 2),
-            min: e.target.value.slice(3, 5),
-          };
-          setEndTimePicker(obj);
-        }}
-      />
-    </div>
+    <StyledWrapper>
+      <StyledDateWrapper>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => {
+            setSelectedDate(date);
+          }}
+          minDate={new Date()}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="start date"
+        />
+        <input
+          type="time"
+          onChange={(e) => {
+            const obj = {
+              hour: e.target.value.slice(0, 2),
+              min: e.target.value.slice(3, 5),
+            };
+            setStartTimePicker(obj);
+          }}
+          value={`${startTimePicker?.hour}:${startTimePicker?.min}`}
+        />
+      </StyledDateWrapper>
+      <StyledDateWrapper>
+        <DatePicker
+          selected={selectedDateEnd}
+          onChange={(date) => {
+            setSelectedDateEnd(date);
+            handleClick();
+          }}
+          minDate={new Date()}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="end date"
+        />
+        <input
+          type="time"
+          value={`${endTimePicker?.hour}:${endTimePicker?.min}`}
+          onChange={(e) => {
+            const obj = {
+              hour: e.target.value.slice(0, 2),
+              min: e.target.value.slice(3, 5),
+            };
+            setEndTimePicker(obj);
+          }}
+        />
+      </StyledDateWrapper>
+    </StyledWrapper>
   );
 };
 export default DataPicker;

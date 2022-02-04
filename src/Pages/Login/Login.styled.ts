@@ -37,19 +37,6 @@ export const StyledInput = styled.input`
     border: 3px solid white;
   }
 `;
-export const StyledButton = styled.button`
-  background-color: #fab700;
-  border-radius: 3px;
-  color: white;
-  font-weight: bold;
-  border: none;
-  display: block;
-  width: 130px;
-  font-size: 25px;
-  height: 45px;
-  cursor: pointer;
-  margin: 20px auto 0 auto;
-`;
 export const StyledInfoRegister = styled.p`
   display: block;
   color: white;

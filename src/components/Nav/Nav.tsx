@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { StyledNav } from './Nav.styled';
+import { StyledLink, StyledNav } from './Nav.styled';
 
 interface NavProps {
   isLogged: boolean;
@@ -13,11 +12,16 @@ const Nav = ({ isLogged, isManager }: NavProps) => {
       {isLogged && (
         <ul>
           <li>
-            <Link to="/schedule">Schedule</Link>
+            <StyledLink logo="true" to="/">
+              CHM
+            </StyledLink>
+          </li>
+          <li>
+            <StyledLink to="/schedule">Schedule</StyledLink>
           </li>
           {isManager && (
             <li>
-              <Link to="/managerboard">ManagerBoard</Link>
+              <StyledLink to="/managerboard">ManagerBoard</StyledLink>
             </li>
           )}
         </ul>

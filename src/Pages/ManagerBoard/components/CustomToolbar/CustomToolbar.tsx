@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { ToolbarProps } from 'react-big-calendar';
-import { StyledButton } from '../../MangerBoardPage.styled';
+import { StyledWrapper, StyledTitle } from './CustomToolbar.styled';
+import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 
 interface CustomToolbarProps {
   props: ToolbarProps;
@@ -19,21 +20,22 @@ const CustomToolbar = ({
     props.onNavigate('PREV');
   };
   return (
-    <div>
+    <StyledWrapper>
+      <StyledTitle>{label}</StyledTitle>
+
+      <StyledButton onClick={handlePrev} type="submit">
+        PREV
+      </StyledButton>
+      <StyledButton onClick={handleNext} type="submit">
+        NEXT
+      </StyledButton>
       <StyledButton
         onClick={() => setsShowAddToScheduleModal(true)}
         type="submit"
       >
         Add
       </StyledButton>
-      <h2>{label}</h2>
-      <button onClick={handlePrev} type="submit">
-        prev
-      </button>
-      <button onClick={handleNext} type="submit">
-        NEXT
-      </button>
-    </div>
+    </StyledWrapper>
   );
 };
 export default CustomToolbar;
