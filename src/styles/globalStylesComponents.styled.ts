@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button<any>`
+interface StyledButtonProps {
+  margin?: string;
+  background?: string;
+}
+
+export const StyledButton = styled.button<StyledButtonProps>`
   background-color: ${({ background }) => background || '#fab700'};
   border-radius: 3px;
   color: white;

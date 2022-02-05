@@ -1,13 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
-import { fetchDataFromDataBase } from '../../../utils/fetchDataFromDataBase';
-import { IEvents } from '../typesManagerBoard';
-
-export const fetchEvents = async (
+import { eqObject, fetchDataFromDataBase } from './fetchDataFromDataBase';
+import { IEvents } from '../Pages/ManagerBoard/typesManagerBoard';
+// TODO Check types after added to object name and surname
+export const fetchEventsSchedule = async (
   setEvents: Dispatch<SetStateAction<IEvents[]>>,
+  eq?: eqObject,
 ) => {
   const { data, error } = await fetchDataFromDataBase(
     'schedule',
     'workPlace,startDate,endDate,id,Name,Surname,userId',
+    eq,
   );
   if (data !== null) {
     const newArray = data.map(
@@ -22,6 +24,8 @@ export const fetchEvents = async (
       }) => {
         const obj = {
           title: `${el.workPlace} - ${el.Name}${el.Surname}`,
+          Name: el.Name,
+          Surname: el.Surname,
           workPlace: el.workPlace,
           id: el.id,
           userId: el.userId,

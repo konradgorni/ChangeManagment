@@ -19,6 +19,7 @@ const CustomToolbar = ({
   const handlePrev = () => {
     props.onNavigate('PREV');
   };
+
   return (
     <StyledWrapper>
       <StyledTitle>{label}</StyledTitle>

@@ -37,6 +37,8 @@ export interface IEvents {
   end: Date;
   userId: string;
   workPlace: string;
+  Name: string;
+  Surname: string;
 }
 export interface IEventData {
   title: string;

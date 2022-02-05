@@ -15,7 +15,7 @@ import {
 import AddToScheduleModal from './components/AddToScheduleModal/AddToScheduleModal';
 import ConfirmDeleteEvent from './components/AddToScheduleModal/ConfirmDeleteEvent';
 import EditScheduleEventModal from './components/EditScheduleEventModal/EditScheduleEventModal';
-import { fetchEvents } from './utils/fetchEvents';
+import { fetchEventsSchedule } from '../../utils/fetchEventsSchedule';
 import { fetchWorkPlaces } from './utils/fetchWorkPlaces';
 import { workersListFetch } from './utils/workersListFetch';
 import WrapperEvents from './components/WrapperEvents/WrapperEvents';
@@ -57,7 +57,7 @@ const ManagerBoardPage = () => {
   }, []);
 
   const fetchData = () => {
-    fetchEvents(setEvents);
+    fetchEventsSchedule(setEvents);
   };
   const handleAdd = () => {
     const obj = {
