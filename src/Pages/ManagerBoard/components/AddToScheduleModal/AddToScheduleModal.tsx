@@ -10,10 +10,10 @@ import {
   IdataPickerData,
   IselectedWorker,
   IworkersList,
-  IworkPlaceList,
 } from '../../typesManagerBoard';
 import { EmptyObject } from '../../../../store/slice/AuthSlice';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
+import { IReactSelectData } from '../../../../utils/globalTypes';
 
 interface AddToScheduleModalProps {
   setSelectedWorker: Dispatch<
@@ -21,7 +21,7 @@ interface AddToScheduleModalProps {
   >;
   workersList: IworkersList[];
   setSelectedWorkPlace: Dispatch<SetStateAction<string | undefined>>;
-  workPlaceList?: IworkPlaceList[];
+  workPlaceList?: IReactSelectData[];
   setDataPickerData: Dispatch<SetStateAction<IdataPickerData | undefined>>;
   handleAdd: () => void;
   setsShowAddToScheduleModal: Dispatch<SetStateAction<boolean>>;

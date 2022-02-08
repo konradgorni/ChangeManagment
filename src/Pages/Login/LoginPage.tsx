@@ -5,18 +5,24 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { supabase } from '../../supabase/client';
-import { saveUser, updateManager } from '../../store/slice/AuthSlice';
+import {
+  saveUser,
+  updateAdmin,
+  updateManager,
+} from '../../store/slice/AuthSlice';
 import {
   StyledAccountCreatedInfo,
-  StyledErrorMesage,
   StyledHeader,
   StyledInfoRegister,
-  StyledInput,
-  StyledLabel,
   StyledWrapper,
 } from './Login.styled';
 import { fetchDataFromDataBase } from '../../utils/fetchDataFromDataBase';
-import { StyledButton } from '../../styles/globalStylesComponents.styled';
+import {
+  StyledButton,
+  StyledLabel,
+  StyledInput,
+  StyledErrorMesage,
+} from '../../styles/globalStylesComponents.styled';
 
 const schema = yup
   .object({
@@ -55,12 +61,13 @@ const LoginPage = () => {
   }, [createdAccount]);
 
   async function fetchDataUser(userId: string | undefined) {
-    fetchDataFromDataBase('users', 'isManager', {
+    fetchDataFromDataBase('users', 'isManager,isAdmin', {
       columnTitle: 'userId',
       columnValue: userId,
     }).then(({ data }) => {
       if (data !== null) {
         dispatch(updateManager(data[0].isManager));
+        dispatch(updateAdmin(data[0].isAdmin));
       }
     });
   }
@@ -77,7 +84,7 @@ const LoginPage = () => {
       alert(error.message);
     }
   };
-
+  // TODO change id name
   return (
     <StyledWrapper>
       {created && (

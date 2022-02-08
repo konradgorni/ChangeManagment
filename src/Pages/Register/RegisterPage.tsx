@@ -10,8 +10,8 @@ import {
   StyledErrorMesage,
   StyledInput,
   StyledLabel,
-} from '../Login/Login.styled';
-import { StyledButton } from '../../styles/globalStylesComponents.styled';
+  StyledButton,
+} from '../../styles/globalStylesComponents.styled';
 
 const schema = yup
   .object({

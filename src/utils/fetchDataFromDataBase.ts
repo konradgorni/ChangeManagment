@@ -5,10 +5,6 @@ export interface eqObject {
   columnValue?: string | number;
 }
 
-// const isNumber = (arg: string | number): arg is number => {
-//   return typeof arg === 'number';
-// };
-
 export async function fetchDataFromDataBase(
   table: string,
   select: string,

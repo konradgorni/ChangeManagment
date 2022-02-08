@@ -5,7 +5,7 @@ export interface eqObject {
   columnValue?: string | number;
 }
 
-export async function updateEventScheduleRow(
+export async function updateRowDataBase(
   table: string,
   updateDate: any,
   eq: eqObject = { columnTitle: '', columnValue: '' },

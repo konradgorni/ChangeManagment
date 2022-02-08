@@ -1,4 +1,4 @@
-import { updateEventScheduleRow } from '../../../utils/updateEventScheduleRow';
+import { updateRowDataBase } from '../../../utils/updateRowDataBase';
 import { IdataPickerDataObj } from '../typesManagerBoard';
 
 interface IUpdateDate {
@@ -14,7 +14,7 @@ export const updateEventSchedule = async (
   updateDate: IUpdateDate,
   id: number,
 ) => {
-  const { data, error } = await updateEventScheduleRow('schedule', updateDate, {
+  const { data, error } = await updateRowDataBase('schedule', updateDate, {
     columnTitle: 'id',
     columnValue: id,
   });

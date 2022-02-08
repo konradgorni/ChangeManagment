@@ -6,11 +6,13 @@ export type EmptyObject = Record<any, never>;
 interface initialStateAuth {
   value: payload | Record<string, EmptyObject>;
   isManager: boolean;
+  isAdmin: boolean;
 }
 
 const initialState: initialStateAuth = {
   value: {},
   isManager: false,
+  isAdmin: false,
 };
 
 export const authSlice = createSlice({
@@ -23,8 +25,11 @@ export const authSlice = createSlice({
     updateManager: (state, action: PayloadAction<any>) => {
       state.isManager = action.payload;
     },
+    updateAdmin: (state, action: PayloadAction<any>) => {
+      state.isAdmin = action.payload;
+    },
   },
 });
 
-export const { saveUser, updateManager } = authSlice.actions;
+export const { saveUser, updateManager, updateAdmin } = authSlice.actions;
 export default authSlice.reducer;

@@ -4,9 +4,10 @@ import { StyledLink, StyledNav } from './Nav.styled';
 interface NavProps {
   isLogged: boolean;
   isManager: boolean;
+  isAdmin: boolean;
 }
 
-const Nav = ({ isLogged, isManager }: NavProps) => {
+const Nav = ({ isLogged, isManager, isAdmin }: NavProps) => {
   return (
     <StyledNav>
       {isLogged && (
@@ -22,6 +23,11 @@ const Nav = ({ isLogged, isManager }: NavProps) => {
           {isManager && (
             <li>
               <StyledLink to="/managerboard">ManagerBoard</StyledLink>
+            </li>
+          )}
+          {isAdmin && (
+            <li>
+              <StyledLink to="/settings">Settings</StyledLink>
             </li>
           )}
         </ul>

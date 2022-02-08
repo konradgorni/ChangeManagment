@@ -12,10 +12,10 @@ import {
   IdataPickerData,
   IEventData,
   IworkersList,
-  IworkPlaceList,
 } from '../../typesManagerBoard';
 import { updateEventSchedule } from '../../utils/updateEventSchedule';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
+import { IReactSelectData } from '../../../../utils/globalTypes';
 
 export interface IeditData {
   e?: Date;
@@ -26,7 +26,7 @@ export interface IeditData {
 
 interface EditScheduleEventModalProps {
   workersList: IworkersList[];
-  workPlaceList?: IworkPlaceList[];
+  workPlaceList?: IReactSelectData[];
   setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
   currentEditEventData: IEventData | EmptyObject;
   fetchData: () => void;
@@ -45,7 +45,7 @@ const EditScheduleEventModal = ({
   const [
     selectedWorkPlace,
     setSelectedWorkPlace,
-  ] = useState<IworkPlaceList | null>(null);
+  ] = useState<IReactSelectData | null>(null);
   const [dataPickerData, setDataPickerData] = useState<
     IdataPickerData | undefined
   >();
@@ -80,7 +80,7 @@ const EditScheduleEventModal = ({
     }
     if (workPlaceList) {
       const findWorkStation = workPlaceList?.filter(
-        (el: IworkPlaceList) => el.value === workPlace,
+        (el: IReactSelectData) => el.value === workPlace,
       );
       setSelectedWorkPlace(findWorkStation[0]);
     }

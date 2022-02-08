@@ -1,3 +1,5 @@
+import { IReactSelectData } from '../../utils/globalTypes';
+
 export interface IworkersListValueObject {
   Name: string;
   Surname: string;
@@ -7,10 +9,6 @@ export interface IworkersListValueObject {
 export interface IworkersList {
   label: string;
   value: IworkersListValueObject;
-}
-export interface IworkPlaceList {
-  label: string;
-  value: string;
 }
 
 export interface IselectedWorker {
@@ -53,4 +51,4 @@ export enum DataPickerTypeEnum {
   EDIT = 'EDIT',
 }
 
-export type fetchWorkPlacesType = IworkPlaceList[] | undefined;
+export type fetchWorkPlacesType = IReactSelectData[] | undefined;

@@ -8,7 +8,6 @@ import {
   IdataPickerData,
   IselectedWorker,
   IworkersList,
-  IworkPlaceList,
   IEvents,
   IEventData,
 } from './typesManagerBoard';
@@ -20,6 +19,7 @@ import { fetchWorkPlaces } from './utils/fetchWorkPlaces';
 import { workersListFetch } from './utils/workersListFetch';
 import WrapperEvents from './components/WrapperEvents/WrapperEvents';
 import CustomToolbar from './components/CustomToolbar/CustomToolbar';
+import { IReactSelectData } from '../../utils/globalTypes';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
@@ -36,7 +36,7 @@ const ManagerBoardPage = () => {
 
   const [events, setEvents] = useState<IEvents[]>([]);
   const [workersList, setWorkersList] = useState<IworkersList[]>([]);
-  const [workPlaceList, setWorkPlaceList] = useState<IworkPlaceList[]>();
+  const [workPlaceList, setWorkPlaceList] = useState<IReactSelectData[]>();
   const [dataPickerData, setDataPickerData] = useState<IdataPickerData>();
   const [selectedWorker, setSelectedWorker] = useState<
     IselectedWorker | EmptyObject | null

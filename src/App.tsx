@@ -18,16 +18,19 @@ import Protected from './Pages/Protected';
 import SchedulePage from './Pages/Schedule/SchedulePage';
 import ManagerBoardPage from './Pages/ManagerBoard/ManagerBoardPage';
 import Nav from './components/Nav/Nav';
+import SettingsPage from './Pages/Settings/SettingsPage';
 
 const App: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth);
   const isLogged = user.value?.aud === 'authenticated';
-  const { isManager } = user;
+  const { isManager, isAdmin } = user;
   return (
     <Router>
       <div>
         <GlobalStyless />
-        {isLogged && <Nav isLogged={isLogged} isManager={isManager} />}
+        {isLogged && (
+          <Nav isLogged={isLogged} isManager={isManager} isAdmin={isAdmin} />
+        )}
         <Routes>
           <Route
             path="/"
@@ -43,6 +46,9 @@ const App: React.FC = () => {
             <Route path="/schedule" element={<SchedulePage />} />
             <Route element={<Protected path="/managerboard" is={isManager} />}>
               <Route path="/managerboard" element={<ManagerBoardPage />} />
+            </Route>
+            <Route element={<Protected path="/settings" is={isAdmin} />}>
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Route>
           <Route path="*" element={<ErrorPage />} />
