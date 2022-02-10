@@ -22,9 +22,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
   cursor: pointer;
   margin: ${({ margin }) => margin};
 `;
-export const StyledLabel = styled.label`
+export const StyledLabel = styled.label<{ flexDirection?: string }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ flexDirection }) => flexDirection || 'colum'};
   color: #fab700;
   font-weight: 600;
   h3 {

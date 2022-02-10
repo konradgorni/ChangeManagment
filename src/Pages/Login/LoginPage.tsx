@@ -74,15 +74,11 @@ const LoginPage = () => {
 
   const handleLogIn = async (data: handleLogInData) => {
     const { email, password } = data;
-    try {
-      const { user, error } = await supabase.auth.signIn({ email, password });
-      if (error) return;
-      dispatch(saveUser(user));
-      fetchDataUser(user?.id);
-      navigate('/start');
-    } catch (error) {
-      alert(error.message);
-    }
+    const { user, error } = await supabase.auth.signIn({ email, password });
+    if (error) return;
+    dispatch(saveUser(user));
+    fetchDataUser(user?.id);
+    navigate('/start');
   };
   // TODO change id name
   return (

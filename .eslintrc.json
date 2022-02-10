@@ -26,7 +26,6 @@
     "consistent-return": "off",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
-    "jsx-a11y/label-has-for": 0,
     "no-param-reassign": "off",
     "no-use-before-define": "off",
     "prettier/prettier": "error",
@@ -36,6 +35,16 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/require-default-props": "off",
+    "jsx-a11y/label-has-associated-control": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }],
+    "jsx-a11y/label-has-for": [ "error", {
+      "required": {
+        "some": [ "nesting", "id"  ]
+      }
+    }],
     "react/jsx-filename-extension": [
       1,
       {

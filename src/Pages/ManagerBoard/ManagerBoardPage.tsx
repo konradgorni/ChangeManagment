@@ -20,6 +20,7 @@ import { workersListFetch } from './utils/workersListFetch';
 import WrapperEvents from './components/WrapperEvents/WrapperEvents';
 import CustomToolbar from './components/CustomToolbar/CustomToolbar';
 import { IReactSelectData } from '../../utils/globalTypes';
+import UserScheduleInfo from './components/UsersScheduleInfo/UsersScheduleInfo';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
@@ -33,7 +34,7 @@ const ManagerBoardPage = () => {
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState<boolean>(
     false,
   );
-
+  const [currentDateView, setCurrentDateView] = useState<Date>(new Date());
   const [events, setEvents] = useState<IEvents[]>([]);
   const [workersList, setWorkersList] = useState<IworkersList[]>([]);
   const [workPlaceList, setWorkPlaceList] = useState<IReactSelectData[]>();
@@ -42,6 +43,9 @@ const ManagerBoardPage = () => {
     IselectedWorker | EmptyObject | null
   >({});
   const [selectedWorkPlace, setSelectedWorkPlace] = useState<string>();
+  const [showUsersScheduleInfo, setShowUsersScheduleInfo] = useState<boolean>(
+    false,
+  );
 
   const [currentIdEvent, setCurrentIdEvent] = useState<number | undefined>(
     undefined,
@@ -85,6 +89,8 @@ const ManagerBoardPage = () => {
       <CustomToolbar
         props={props}
         setsShowAddToScheduleModal={setsShowAddToScheduleModal}
+        setShowUsersScheduleInfo={setShowUsersScheduleInfo}
+        setCurrentDateView={setCurrentDateView}
       />
     ),
   };
@@ -126,6 +132,13 @@ const ManagerBoardPage = () => {
           setShowEditScheduleModal={setShowEditScheduleModal}
           currentEditEventData={currentEditEventData}
           fetchData={fetchData}
+        />
+      )}
+      {showUsersScheduleInfo && (
+        <UserScheduleInfo
+          hideModal={setShowUsersScheduleInfo}
+          currentDateView={currentDateView}
+          workersList={workersList}
         />
       )}
     </StyledWrapper>

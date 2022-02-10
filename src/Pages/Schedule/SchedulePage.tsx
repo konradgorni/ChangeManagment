@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import { Calendar, momentLocalizer, ToolbarProps } from 'react-big-calendar';
+import {
+  Calendar,
+  DateHeaderProps,
+  momentLocalizer,
+  ToolbarProps,
+} from 'react-big-calendar';
 import { useSelector } from 'react-redux';
+import { User } from '@supabase/supabase-js';
 import { RootState } from '../../store/store';
 import CustomToolbarSchedule from './components/CustomToolbarSchedule/CustomToolbarSchedule';
 import WrapperCustomEvent from './components/WrapperCustomEvent/WrapperCustomEvent';
@@ -10,6 +16,8 @@ import { StyledWrapper } from './SchedulePage.styled';
 import CoworkersModal from './components/CoworkersModal/CoworkersModal';
 import { IEvents } from '../ManagerBoard/typesManagerBoard';
 import { fetchEventsSchedule } from '../../utils/fetchEventsSchedule';
+import OnSelectModal from './components/OnSelectModal/OnSelectModal';
+import CustomDateHeaderDay from './components/CustomDateHeaderDay/CustomDateHeaderDay';
 
 export interface IDataToFind {
   name: string;
@@ -31,7 +39,6 @@ interface IEvent {
   Name: string;
   Surname: string;
 }
-
 const SchedulePage = () => {
   const localizer = momentLocalizer(moment);
   const user: any = useSelector((state: RootState) => state.auth.value);
@@ -41,6 +48,11 @@ const SchedulePage = () => {
   const [dataToFindCoWorkers, setDataToFindCoWorkers] = useState<
     IDataToFind | undefined
   >();
+  const [showSelectModal, setShowSelectModal] = useState(false);
+  const [
+    selectModalData,
+    setSelectModalData,
+  ] = useState<DateHeaderProps | null>(null);
   useEffect(() => {
     fetchEventsSchedule(setEvents, {
       columnTitle: 'userId',
@@ -49,10 +61,16 @@ const SchedulePage = () => {
     fetchEventsSchedule(setAllEvents);
   }, []);
 
-  const handleSelect = (e: any) => {
-    // console.log('handle', e);
-  };
   const components = {
+    month: {
+      dateHeader: (props: DateHeaderProps) => (
+        <CustomDateHeaderDay
+          props={props}
+          setShowSelectModal={setShowSelectModal}
+          setSelectModalData={setSelectModalData}
+        />
+      ),
+    },
     toolbar: (props: ToolbarProps) => <CustomToolbarSchedule props={props} />,
     event: ({ event, title }: { event: IEvent; title: string }) => (
       <WrapperCustomEvent
@@ -63,6 +81,7 @@ const SchedulePage = () => {
       />
     ),
   };
+
   return (
     <StyledWrapper>
       <Calendar
@@ -78,6 +97,13 @@ const SchedulePage = () => {
           dataToFindCoWorkers={dataToFindCoWorkers}
           allEvents={allEvents}
           setShowCoWorkersModal={setShowCoWorkersModal}
+        />
+      )}
+      {showSelectModal && (
+        <OnSelectModal
+          dataObj={selectModalData}
+          setShowSelectModal={setShowSelectModal}
+          user={user}
         />
       )}
     </StyledWrapper>
