@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ToastContainer } from 'react-toastify';
 import { supabase } from '../../supabase/client';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { StyledWrapper, StyledHeader } from './Register.styled';
@@ -12,6 +13,10 @@ import {
   StyledLabel,
   StyledButton,
 } from '../../styles/globalStylesComponents.styled';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../utils/notificationsHandler';
 
 const schema = yup
   .object({
@@ -57,14 +62,14 @@ const RegisterPage = () => {
 
   const handleRegister = async (data: handleRegisterData) => {
     const { email, password, name, surname } = data;
-    try {
-      const { error, user } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
-      if (user?.aud === 'authenticated') {
-        sendToBase(user.id, false, name, surname);
-      }
-    } catch (error) {
-      alert(error.message);
+    const { error, user } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      notyficationsHandler(
+        'Something went wrong',
+        NotyficationsStatusEnum.ERROR,
+      );
+    } else if (user?.aud === 'authenticated') {
+      sendToBase(user.id, false, name, surname);
     }
   };
   return (
@@ -99,6 +104,7 @@ const RegisterPage = () => {
           Submit
         </StyledButton>
       </form>
+      <ToastContainer />
     </StyledWrapper>
   );
 };

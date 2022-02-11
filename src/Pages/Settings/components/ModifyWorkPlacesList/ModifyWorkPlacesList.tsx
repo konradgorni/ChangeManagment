@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { deleteElementFromDataBase } from '../../../../utils/deleteElementFromDataBase';
-import { updateRowDataBase } from '../../../../utils/updateRowDataBase';
 import {
   StyledButtonsWrapper,
   StyledContainer,
   StyledSelect,
   StyledWrapper,
-} from './ModyficationsWorkPlacesList.styled';
+} from './ModifyWorkPlacesList.styled';
 import {
   StyledLabel,
   StyledInput,
@@ -19,20 +18,24 @@ import {
 import { IReactSelectData } from '../../../../utils/globalTypes';
 import { updateFunction } from './utils/updateFunction';
 import { IupdateData } from '../../typesSettingsPage';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 interface IDataForm {
   workPlaceName: IReactSelectData | undefined;
   workPlaceElementRename: string;
 }
-interface ModyficationsWorkPlacesListProps {
+interface IModifyWorkPlacesListProps {
   workPlaceList: IReactSelectData[] | undefined;
   WorkPlacesListFetch: () => void;
 }
 
-const ModyficationsWorkPlacesList = ({
+const ModifyWorkPlacesList = ({
   workPlaceList,
   WorkPlacesListFetch,
-}: ModyficationsWorkPlacesListProps) => {
+}: IModifyWorkPlacesListProps) => {
   const [showEditOptions, setShowEditOptions] = useState<boolean>(false);
   const [editSchema, setEditSchema] = useState<boolean>(false);
 
@@ -45,7 +48,7 @@ const ModyficationsWorkPlacesList = ({
       })
       .required('This field is required.'),
     workPlaceElementRename: yup.string().when('dummy', {
-      is: (value: string) => editSchema === true,
+      is: () => editSchema,
       then: yup
         .string()
         .required('This field is required.')
@@ -71,9 +74,20 @@ const ModyficationsWorkPlacesList = ({
     deleteElementFromDataBase('workPlaces', {
       columnTitle: 'workPlace',
       columnValue: workPlaceName?.value,
-    }).then(() => {
-      WorkPlacesListFetch();
-      reset({ workPlaceName: { label: '', value: '' } });
+    }).then((res) => {
+      if (res?.error) {
+        notyficationsHandler(
+          'Problem with removed item',
+          NotyficationsStatusEnum.ERROR,
+        );
+      } else {
+        notyficationsHandler(
+          'Element was deleted successfully',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+        WorkPlacesListFetch();
+        reset({ workPlaceName: { label: '', value: '' } });
+      }
     });
   };
 
@@ -81,15 +95,29 @@ const ModyficationsWorkPlacesList = ({
     workPlaceElementRename,
     workPlaceName,
   }: IupdateData) => {
-    updateFunction(workPlaceElementRename, workPlaceName).then(({ data }) => {
-      if (data !== null) {
-        WorkPlacesListFetch();
-        reset({
-          workPlaceName: { label: '', value: '' },
-          workPlaceElementRename: '',
-        });
-      }
-    });
+    updateFunction(workPlaceElementRename, workPlaceName).then(
+      ({ data, error }) => {
+        if (error) {
+          notyficationsHandler(
+            'Problem with updating item',
+            NotyficationsStatusEnum.ERROR,
+          );
+        }
+        if (data !== null) {
+          notyficationsHandler(
+            'Element was updating successfully',
+            NotyficationsStatusEnum.SUCCESS,
+          );
+          setShowEditOptions(false);
+          setEditSchema(false);
+          WorkPlacesListFetch();
+          reset({
+            workPlaceName: { label: '', value: '' },
+            workPlaceElementRename: '',
+          });
+        }
+      },
+    );
   };
 
   return (
@@ -161,4 +189,4 @@ const ModyficationsWorkPlacesList = ({
     </StyledWrapper>
   );
 };
-export default ModyficationsWorkPlacesList;
+export default ModifyWorkPlacesList;

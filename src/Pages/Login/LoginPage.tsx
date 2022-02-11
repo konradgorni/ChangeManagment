@@ -92,7 +92,7 @@ const LoginPage = () => {
     if (error) {
       if (error.status === 400) {
         notyficationsHandler(
-          'Invaild email or password',
+          'Invalid email or password',
           NotyficationsStatusEnum.ERROR,
         );
       } else {

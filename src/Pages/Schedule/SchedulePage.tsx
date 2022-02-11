@@ -79,15 +79,6 @@ const SchedulePage = () => {
     });
   }, [user?.id]);
 
-  const handleNotificationForChildren = (message: string, status: string) => {
-    if (status === NotyficationsStatusEnum.SUCCESS) {
-      notyficationsHandler(message, NotyficationsStatusEnum.SUCCESS);
-    }
-    if (status === NotyficationsStatusEnum.ERROR) {
-      notyficationsHandler(message, NotyficationsStatusEnum.ERROR);
-    }
-  };
-
   const components = {
     month: {
       dateHeader: (props: DateHeaderProps) => (
@@ -128,7 +119,6 @@ const SchedulePage = () => {
       )}
       {showSelectModal && (
         <OnSelectModal
-          handleNotificationForChildren={handleNotificationForChildren}
           dataObj={selectModalData}
           setShowSelectModal={setShowSelectModal}
           user={user}

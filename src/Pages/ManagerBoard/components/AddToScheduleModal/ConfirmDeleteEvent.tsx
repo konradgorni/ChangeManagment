@@ -5,20 +5,21 @@ import {
 } from './ConfirmDeleteEvent.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 import { deleteElementFromDataBase } from '../../../../utils/deleteElementFromDataBase';
-import { NotyficationsStatusEnum } from '../../../../utils/notificationsHandler';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 interface ConfirmDeleteEventProps {
   currentIdEvent: number | undefined;
   setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
   fetchData: () => void;
-  handleNotificationForChildren: (message: string, status: string) => void;
 }
 
 const ConfirmDeleteEvent = ({
   currentIdEvent,
   setShowConfirmDeleteModal,
   fetchData,
-  handleNotificationForChildren,
 }: ConfirmDeleteEventProps) => {
   const handleDelete = () => {
     deleteElementFromDataBase('schedule', {
@@ -26,15 +27,15 @@ const ConfirmDeleteEvent = ({
       columnValue: currentIdEvent,
     }).then((res) => {
       if (res?.error) {
-        handleNotificationForChildren(
-          'Problem with delete this element',
+        notyficationsHandler(
+          'Problem with removing this event',
           NotyficationsStatusEnum.ERROR,
         );
       } else {
         fetchData();
         setShowConfirmDeleteModal(false);
-        handleNotificationForChildren(
-          'Element was deleted',
+        notyficationsHandler(
+          'Element was removed',
           NotyficationsStatusEnum.SUCCESS,
         );
       }

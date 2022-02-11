@@ -9,6 +9,10 @@ import {
   StyledErrorMesage,
   StyledButton,
 } from '../../../../styles/globalStylesComponents.styled';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 const schema = yup
   .object({
@@ -36,9 +40,20 @@ const AddNewWorkPlace = ({ WorkPlacesListFetch }: AddNewWorkPlaceProps) => {
   const saveNewWorkPlaceInDatabase = (data: IDataForm) => {
     sendDataToDataBase('workPlaces', {
       workPlace: data.workPlaceName,
-    }).then(() => {
-      WorkPlacesListFetch();
-      reset({ workPlaceName: '' });
+    }).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with saving new workplace',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+      } else {
+        notyficationsHandler(
+          'Workplace was added',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+        WorkPlacesListFetch();
+        reset({ workPlaceName: '' });
+      }
     });
   };
   return (

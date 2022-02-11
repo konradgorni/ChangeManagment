@@ -35,7 +35,6 @@ interface EditScheduleEventModalProps {
   setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
   currentEditEventData: IEventData | EmptyObject;
   fetchData: () => void;
-  handleNotificationForChildren: (message: string, status: string) => void;
 }
 
 const EditScheduleEventModal = ({
@@ -44,7 +43,6 @@ const EditScheduleEventModal = ({
   setShowEditScheduleModal,
   currentEditEventData,
   fetchData,
-  handleNotificationForChildren,
 }: EditScheduleEventModalProps) => {
   const [selectedWorker, setSelectedWorker] = useState<IworkersList | null>(
     null,
@@ -104,14 +102,14 @@ const EditScheduleEventModal = ({
     };
     updateEventSchedule(obj, eventId).then(({ error }) => {
       if (error) {
-        handleNotificationForChildren(
+        notyficationsHandler(
           'Error with update',
           NotyficationsStatusEnum.ERROR,
         );
       } else {
         fetchData();
         setShowEditScheduleModal(false);
-        handleNotificationForChildren(
+        notyficationsHandler(
           'Event was updated',
           NotyficationsStatusEnum.SUCCESS,
         );

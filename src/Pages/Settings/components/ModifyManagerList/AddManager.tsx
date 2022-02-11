@@ -2,13 +2,17 @@ import React from 'react';
 import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { StyledSelect } from './ModyficationsManagerList.styled';
+import { StyledSelect } from './ModifyManagerList.styled';
 import {
   StyledErrorMesage,
   StyledButton,
 } from '../../../../styles/globalStylesComponents.styled';
 import { IReactSelectData } from '../../../../utils/globalTypes';
 import { updateRowDataBase } from '../../../../utils/updateRowDataBase';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 const schema = yup.object().shape({
   userData: yup
@@ -44,9 +48,20 @@ const AddManager = ({ userList, ManagerListFetch }: AddManager) => {
       'users',
       { isManager: true },
       { columnTitle: 'id', columnValue: userData.value },
-    ).then(() => {
-      ManagerListFetch();
-      reset({ userData: { label: '', value: '' } });
+    ).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with adding the manager',
+          NotyficationsStatusEnum.ERROR,
+        );
+      } else {
+        notyficationsHandler(
+          'Manager was added',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+        ManagerListFetch();
+        reset({ userData: { label: '', value: '' } });
+      }
     });
   };
   return (

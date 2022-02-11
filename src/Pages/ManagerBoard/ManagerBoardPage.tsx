@@ -90,14 +90,6 @@ const ManagerBoardPage = () => {
       }
     });
   };
-  const handleNotificationForChildren = (message: string, status: string) => {
-    if (status === NotyficationsStatusEnum.SUCCESS) {
-      notyficationsHandler(message, NotyficationsStatusEnum.SUCCESS);
-    }
-    if (status === NotyficationsStatusEnum.ERROR) {
-      notyficationsHandler(message, NotyficationsStatusEnum.ERROR);
-    }
-  };
   const handleAdd = () => {
     const obj = {
       userId: selectedWorker?.userId,
@@ -169,7 +161,6 @@ const ManagerBoardPage = () => {
       )}
       {showConfirmDeleteModal && (
         <ConfirmDeleteEvent
-          handleNotificationForChildren={handleNotificationForChildren}
           currentIdEvent={currentIdEvent}
           setShowConfirmDeleteModal={setShowConfirmDeleteModal}
           fetchData={fetchData}
@@ -177,7 +168,6 @@ const ManagerBoardPage = () => {
       )}
       {showEditScheduleModal && (
         <EditScheduleEventModal
-          handleNotificationForChildren={handleNotificationForChildren}
           workersList={workersList}
           workPlaceList={workPlaceList}
           setShowEditScheduleModal={setShowEditScheduleModal}

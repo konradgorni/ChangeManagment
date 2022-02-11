@@ -6,9 +6,13 @@ import {
   StyledErrorMesage,
   StyledButton,
 } from '../../../../styles/globalStylesComponents.styled';
-import { StyledSelect } from './ModyficationsManagerList.styled';
+import { StyledSelect } from './ModifyManagerList.styled';
 import { updateRowDataBase } from '../../../../utils/updateRowDataBase';
 import { IReactSelectData } from '../../../../utils/globalTypes';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 const schema = yup.object().shape({
   managerName: yup
@@ -39,15 +43,29 @@ const DeleteManager = ({
   } = useForm<IFormData>({
     resolver: yupResolver(schema),
   });
-  const handleDelete = ({ managerName }: any) => {
-    const { value } = managerName;
+  const handleDelete = ({
+    managerName: { value },
+  }: {
+    managerName: IReactSelectData;
+  }) => {
     updateRowDataBase(
       'users',
       { isManager: false },
       { columnTitle: 'id', columnValue: value },
-    ).then(() => {
-      ManagerListFetch();
-      reset({ managerName: { label: '', value: '' } });
+    ).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with removing the manager',
+          NotyficationsStatusEnum.ERROR,
+        );
+      } else {
+        notyficationsHandler(
+          'Manager was removed',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+        ManagerListFetch();
+        reset({ managerName: { label: '', value: '' } });
+      }
     });
   };
   return (

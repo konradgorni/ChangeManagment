@@ -16,13 +16,15 @@ import {
   StyledButton,
   StyledErrorMesage,
 } from '../../../../styles/globalStylesComponents.styled';
-import { NotyficationsStatusEnum } from '../../../../utils/notificationsHandler';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 interface OnSelectModalProps {
   dataObj: DateHeaderProps | null;
   setShowSelectModal: Dispatch<SetStateAction<boolean>>;
   user: any;
-  handleNotificationForChildren: (message: string, status: string) => void;
 }
 
 interface IFormData {
@@ -34,7 +36,6 @@ const OnSelectModal = ({
   dataObj,
   setShowSelectModal,
   user,
-  handleNotificationForChildren,
 }: OnSelectModalProps) => {
   const [checked, setChecked] = useState(false);
   const schema = yup.object({
@@ -76,12 +77,12 @@ const OnSelectModal = ({
       };
       sendDataToDataBase('usersScheduleInfo', obj).then(({ error }) => {
         if (error) {
-          handleNotificationForChildren(
+          notyficationsHandler(
             'Problem with add report to change',
             NotyficationsStatusEnum.ERROR,
           );
         } else {
-          handleNotificationForChildren(
+          notyficationsHandler(
             'Report was added',
             NotyficationsStatusEnum.SUCCESS,
           );
