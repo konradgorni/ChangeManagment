@@ -6,5 +6,9 @@ export async function deleteElementFromDataBase(
   eq: eqObject = { columnTitle: '', columnValue: '' },
 ) {
   if (eq.columnValue === '') return;
-  await supabase.from(table).delete().eq(eq.columnTitle, eq.columnValue);
+  const { data, error } = await supabase
+    .from(table)
+    .delete()
+    .eq(eq.columnTitle, eq.columnValue);
+  return { data, error };
 }

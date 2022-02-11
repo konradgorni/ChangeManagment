@@ -169,6 +169,7 @@ const ManagerBoardPage = () => {
       )}
       {showConfirmDeleteModal && (
         <ConfirmDeleteEvent
+          handleNotificationForChildren={handleNotificationForChildren}
           currentIdEvent={currentIdEvent}
           setShowConfirmDeleteModal={setShowConfirmDeleteModal}
           fetchData={fetchData}
