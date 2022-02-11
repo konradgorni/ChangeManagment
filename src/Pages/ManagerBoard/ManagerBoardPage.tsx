@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer, ToolbarProps } from 'react-big-calendar';
 import moment from 'moment';
+import { ToastContainer } from 'react-toastify';
 import { StyledWrapper } from './MangerBoardPage.styled';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
@@ -21,6 +22,11 @@ import WrapperEvents from './components/WrapperEvents/WrapperEvents';
 import CustomToolbar from './components/CustomToolbar/CustomToolbar';
 import { IReactSelectData } from '../../utils/globalTypes';
 import UserScheduleInfo from './components/UsersScheduleInfo/UsersScheduleInfo';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../utils/notificationsHandler';
 
 const ManagerBoardPage = () => {
   const localizer = momentLocalizer(moment);
@@ -55,13 +61,42 @@ const ManagerBoardPage = () => {
   >({});
 
   useEffect(() => {
-    workersListFetch(setWorkersList);
+    workersListFetch(setWorkersList).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with workers list',
+          NotyficationsStatusEnum.ERROR,
+        );
+      }
+    });
     fetchData();
-    fetchWorkPlaces(setWorkPlaceList);
+    fetchWorkPlaces(setWorkPlaceList).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with work places list',
+          NotyficationsStatusEnum.ERROR,
+        );
+      }
+    });
   }, []);
 
   const fetchData = () => {
-    fetchEventsSchedule(setEvents);
+    fetchEventsSchedule(setEvents).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with events schedule',
+          NotyficationsStatusEnum.ERROR,
+        );
+      }
+    });
+  };
+  const handleNotificationForChildren = (message: string, status: string) => {
+    if (status === NotyficationsStatusEnum.SUCCESS) {
+      notyficationsHandler(message, NotyficationsStatusEnum.SUCCESS);
+    }
+    if (status === NotyficationsStatusEnum.ERROR) {
+      notyficationsHandler(message, NotyficationsStatusEnum.ERROR);
+    }
   };
   const handleAdd = () => {
     const obj = {
@@ -72,7 +107,21 @@ const ManagerBoardPage = () => {
       Name: selectedWorker?.Name,
       Surname: selectedWorker?.Surname,
     };
-    sendDataToDataBase('schedule', obj).then(() => fetchData());
+    sendDataToDataBase('schedule', obj).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with adding',
+          NotyficationsStatusEnum.ERROR,
+        );
+      } else {
+        fetchData();
+        notyficationsHandler(
+          'Your event was added',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+        setsShowAddToScheduleModal(false);
+      }
+    });
   };
 
   const components = {
@@ -127,6 +176,7 @@ const ManagerBoardPage = () => {
       )}
       {showEditScheduleModal && (
         <EditScheduleEventModal
+          handleNotificationForChildren={handleNotificationForChildren}
           workersList={workersList}
           workPlaceList={workPlaceList}
           setShowEditScheduleModal={setShowEditScheduleModal}
@@ -141,6 +191,7 @@ const ManagerBoardPage = () => {
           workersList={workersList}
         />
       )}
+      <ToastContainer />
     </StyledWrapper>
   );
 };

@@ -24,7 +24,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
 `;
 export const StyledLabel = styled.label<{ flexDirection?: string }>`
   display: flex;
-  flex-direction: ${({ flexDirection }) => flexDirection || 'colum'};
+  flex-direction: column;
   color: #fab700;
   font-weight: 600;
   h3 {

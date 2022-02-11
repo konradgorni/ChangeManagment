@@ -19,4 +19,5 @@ export const fetchWorkPlaces = async (
     });
     setWorkPlaceList(workPlacesOptions);
   }
+  return { error };
 };

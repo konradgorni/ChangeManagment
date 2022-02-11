@@ -49,4 +49,5 @@ export const fetchEventsSchedule = async (
     );
     setEvents(newArray);
   }
+  return { error };
 };

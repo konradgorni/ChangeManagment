@@ -25,4 +25,5 @@ export const workersListFetch = async (
     );
     setWorkersList(newArray);
   }
+  return { error };
 };

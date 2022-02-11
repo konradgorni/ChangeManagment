@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Select from 'react-select';
 import moment from 'moment';
+import { ToastContainer } from 'react-toastify';
 import {
   StyledButtonWrapper,
   StyledWrapper,
@@ -16,6 +17,10 @@ import {
 import { updateEventSchedule } from '../../utils/updateEventSchedule';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 import { IReactSelectData } from '../../../../utils/globalTypes';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../../../utils/notificationsHandler';
 
 export interface IeditData {
   e?: Date;
@@ -30,6 +35,7 @@ interface EditScheduleEventModalProps {
   setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
   currentEditEventData: IEventData | EmptyObject;
   fetchData: () => void;
+  handleNotificationForChildren: (message: string, status: string) => void;
 }
 
 const EditScheduleEventModal = ({
@@ -38,6 +44,7 @@ const EditScheduleEventModal = ({
   setShowEditScheduleModal,
   currentEditEventData,
   fetchData,
+  handleNotificationForChildren,
 }: EditScheduleEventModalProps) => {
   const [selectedWorker, setSelectedWorker] = useState<IworkersList | null>(
     null,
@@ -95,8 +102,20 @@ const EditScheduleEventModal = ({
       startDate: dataPickerData?.startObj,
       endDate: dataPickerData?.endObj,
     };
-    updateEventSchedule(obj, eventId).then(() => {
-      fetchData();
+    updateEventSchedule(obj, eventId).then(({ error }) => {
+      if (error) {
+        handleNotificationForChildren(
+          'Error with update',
+          NotyficationsStatusEnum.ERROR,
+        );
+      } else {
+        fetchData();
+        setShowEditScheduleModal(false);
+        handleNotificationForChildren(
+          'Event was updated',
+          NotyficationsStatusEnum.SUCCESS,
+        );
+      }
     });
   };
 
@@ -134,6 +153,7 @@ const EditScheduleEventModal = ({
           </StyledButton>
         </StyledButtonWrapper>
       </div>
+      <ToastContainer />
     </StyledWrapper>
   );
 };

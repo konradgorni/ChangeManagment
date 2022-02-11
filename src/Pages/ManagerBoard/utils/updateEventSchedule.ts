@@ -18,7 +18,6 @@ export const updateEventSchedule = async (
     columnTitle: 'id',
     columnValue: id,
   });
-  if (data !== null) {
-    console.log('TODOSTAJEPO UPDATE', data);
-  }
+
+  return { error };
 };

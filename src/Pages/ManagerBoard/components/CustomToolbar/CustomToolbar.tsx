@@ -19,9 +19,11 @@ const CustomToolbar = ({
   const { label, date } = props;
 
   const handleNext = () => {
+    setShowUsersScheduleInfo(false);
     props.onNavigate('NEXT');
   };
   const handlePrev = () => {
+    setShowUsersScheduleInfo(false);
     props.onNavigate('PREV');
   };
 
