@@ -35,14 +35,13 @@ const App: React.FC = () => {
           <Route
             path="/"
             element={
-              isLogged ? <Navigate to="/start" /> : <Navigate to="/login" />
+              isLogged ? <Navigate to="/schedule" /> : <Navigate to="/login" />
             }
           />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login/:createdAccount" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route element={<Protected path="/" is={isLogged} />}>
-            <Route path="/start" element={<HomePage />} />
             <Route path="/schedule" element={<SchedulePage />} />
             <Route element={<Protected path="/managerboard" is={isManager} />}>
               <Route path="/managerboard" element={<ManagerBoardPage />} />

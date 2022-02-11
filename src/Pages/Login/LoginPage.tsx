@@ -74,7 +74,7 @@ const LoginPage = () => {
       if (data !== null) {
         dispatch(updateManager(data[0].isManager));
         dispatch(updateAdmin(data[0].isAdmin));
-        navigate('/start');
+        navigate('/schedule');
       }
       if (error) {
         notyficationsHandler(
