@@ -8,7 +8,7 @@ import {
   ToolbarProps,
 } from 'react-big-calendar';
 import { useSelector } from 'react-redux';
-import { User } from '@supabase/supabase-js';
+import { ToastContainer } from 'react-toastify';
 import { RootState } from '../../store/store';
 import CustomToolbarSchedule from './components/CustomToolbarSchedule/CustomToolbarSchedule';
 import WrapperCustomEvent from './components/WrapperCustomEvent/WrapperCustomEvent';
@@ -18,6 +18,10 @@ import { IEvents } from '../ManagerBoard/typesManagerBoard';
 import { fetchEventsSchedule } from '../../utils/fetchEventsSchedule';
 import OnSelectModal from './components/OnSelectModal/OnSelectModal';
 import CustomDateHeaderDay from './components/CustomDateHeaderDay/CustomDateHeaderDay';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../utils/notificationsHandler';
 
 export interface IDataToFind {
   name: string;
@@ -57,9 +61,32 @@ const SchedulePage = () => {
     fetchEventsSchedule(setEvents, {
       columnTitle: 'userId',
       columnValue: user?.id,
+    }).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with fetching data to schedule',
+          NotyficationsStatusEnum.ERROR,
+        );
+      }
     });
-    fetchEventsSchedule(setAllEvents);
-  }, []);
+    fetchEventsSchedule(setAllEvents).then(({ error }) => {
+      if (error) {
+        notyficationsHandler(
+          'Problem with fetching data to schedule',
+          NotyficationsStatusEnum.ERROR,
+        );
+      }
+    });
+  }, [user?.id]);
+
+  const handleNotificationForChildren = (message: string, status: string) => {
+    if (status === NotyficationsStatusEnum.SUCCESS) {
+      notyficationsHandler(message, NotyficationsStatusEnum.SUCCESS);
+    }
+    if (status === NotyficationsStatusEnum.ERROR) {
+      notyficationsHandler(message, NotyficationsStatusEnum.ERROR);
+    }
+  };
 
   const components = {
     month: {
@@ -101,11 +128,13 @@ const SchedulePage = () => {
       )}
       {showSelectModal && (
         <OnSelectModal
+          handleNotificationForChildren={handleNotificationForChildren}
           dataObj={selectModalData}
           setShowSelectModal={setShowSelectModal}
           user={user}
         />
       )}
+      <ToastContainer />
     </StyledWrapper>
   );
 };

@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import moment from 'moment';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
+import { IDataToFind } from '../../SchedulePage';
 
 interface IEvent {
   title: string;
@@ -16,7 +17,7 @@ interface WrapperCustomEventProps {
   event: IEvent;
   title: string;
   setShowCoWorkersModal: Dispatch<SetStateAction<boolean>>;
-  setDataToFindCoWorkers: any;
+  setDataToFindCoWorkers: Dispatch<SetStateAction<IDataToFind | undefined>>;
 }
 
 const WrapperCustomEvent = ({
@@ -28,7 +29,6 @@ const WrapperCustomEvent = ({
   const handleCoworkers = () => {
     const timeStart = moment(event.start).format('DD-MM-YYYY HH:mm');
     const timeEnd = moment(event.end).format('DD-MM-YYYY HH:mm');
-    console.log(event, 'xd');
     const obj = {
       name: event.Name,
       surname: event.Surname,
