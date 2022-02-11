@@ -2,12 +2,12 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
-import { IeditData } from '../ManagerBoard/components/EditScheduleEventModal/EditScheduleEventModal';
 import {
   DataPickerTypeEnum,
   IdataPickerData,
-} from '../ManagerBoard/typesManagerBoard';
+} from '../../Pages/ManagerBoard/typesManagerBoard';
 import { StyledDateWrapper, StyledWrapper } from './DataPicker.styled';
+import { IEditData } from '../../Pages/ManagerBoard/components/EditScheduleEventModal/EditScheduleEventModalTypes';
 
 type stateDateType = null | Date;
 
@@ -18,7 +18,7 @@ interface timePicker {
 
 interface dataPickerProps {
   setDataPickerData: Dispatch<SetStateAction<IdataPickerData | undefined>>;
-  editData?: IeditData | null;
+  editData?: IEditData | null;
   typeDataPicker?: DataPickerTypeEnum.ADD | DataPickerTypeEnum.EDIT;
 }
 

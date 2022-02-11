@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import Select from 'react-select';
-import DataPicker from '../../../DataPicker/DataPicker';
+import DataPicker from '../../../../components/DataPicker/DataPicker';
 import {
   StyledButtonWrapper,
   StyledWrapper,

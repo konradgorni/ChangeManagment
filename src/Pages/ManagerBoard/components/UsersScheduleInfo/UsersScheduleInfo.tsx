@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import {
   StyledUsersInfoWrapper,
@@ -7,29 +7,12 @@ import {
 import { fetchDataFromDataBase } from '../../../../utils/fetchDataFromDataBase';
 import { IworkersList } from '../../typesManagerBoard';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
-
-interface UsersScheduleInfoProps {
-  hideModal: Dispatch<SetStateAction<boolean>>;
-  currentDateView: Date;
-  workersList: IworkersList[];
-}
-interface IDateParsed {
-  year: string;
-  month: string;
-  date: string;
-}
-interface IFetchData {
-  Date: IDateParsed;
-  confirmed: boolean;
-  dayOff: boolean;
-  id: number;
-  timeRange: { start: string; end: string };
-  userId: string;
-}
-interface IUserToShowData extends IFetchData {
-  Name: string;
-  Surname: string;
-}
+import {
+  IDateParsed,
+  IFetchData,
+  IUserToShowData,
+  UsersScheduleInfoProps,
+} from './UserScheduleInfoTypes';
 
 const UsersScheduleInfo = ({
   hideModal,

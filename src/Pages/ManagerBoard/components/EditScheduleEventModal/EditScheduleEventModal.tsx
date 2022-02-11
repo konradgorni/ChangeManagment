@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import moment from 'moment';
 import { ToastContainer } from 'react-toastify';
@@ -7,11 +7,10 @@ import {
   StyledWrapper,
 } from './EditScheduleEventModal.styled';
 import { EmptyObject } from '../../../../store/slice/AuthSlice';
-import DataPicker from '../../../DataPicker/DataPicker';
+import DataPicker from '../../../../components/DataPicker/DataPicker';
 import {
   DataPickerTypeEnum,
   IdataPickerData,
-  IEventData,
   IworkersList,
 } from '../../typesManagerBoard';
 import { updateEventSchedule } from '../../utils/updateEventSchedule';
@@ -21,21 +20,10 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
-
-export interface IeditData {
-  e?: Date;
-  s?: Date;
-  timeEnd?: string;
-  timeStart?: string;
-}
-
-interface EditScheduleEventModalProps {
-  workersList: IworkersList[];
-  workPlaceList?: IReactSelectData[];
-  setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
-  currentEditEventData: IEventData | EmptyObject;
-  fetchData: () => void;
-}
+import {
+  EditScheduleEventModalProps,
+  IEditData,
+} from './EditScheduleEventModalTypes';
 
 const EditScheduleEventModal = ({
   workersList,
@@ -56,7 +44,7 @@ const EditScheduleEventModal = ({
   >();
   const [eventId, setEventId] = useState<number>(0);
   const [editData, setEditData] = useState<
-    IeditData | EmptyObject | undefined
+    IEditData | EmptyObject | undefined
   >();
 
   useEffect(() => {
