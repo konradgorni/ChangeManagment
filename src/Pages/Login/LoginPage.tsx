@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { ToastContainer } from 'react-toastify';
 import { supabase } from '../../supabase/client';
 import {
   saveUser,
@@ -23,6 +24,10 @@ import {
   StyledInput,
   StyledErrorMesage,
 } from '../../styles/globalStylesComponents.styled';
+import {
+  notyficationsHandler,
+  NotyficationsStatusEnum,
+} from '../../utils/notificationsHandler';
 
 const schema = yup
   .object({
@@ -43,6 +48,7 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<handleLogInData>({
     resolver: yupResolver(schema),
   });
@@ -60,14 +66,22 @@ const LoginPage = () => {
     }
   }, [createdAccount]);
 
-  async function fetchDataUser(userId: string | undefined) {
+  function fetchDataUser(userId: string | undefined) {
     fetchDataFromDataBase('users', 'isManager,isAdmin', {
       columnTitle: 'userId',
       columnValue: userId,
-    }).then(({ data }) => {
+    }).then(({ data, error }) => {
       if (data !== null) {
         dispatch(updateManager(data[0].isManager));
         dispatch(updateAdmin(data[0].isAdmin));
+        navigate('/start');
+      }
+      if (error) {
+        notyficationsHandler(
+          'Problem with fetching user data',
+          NotyficationsStatusEnum.ERROR,
+        );
+        navigate('/login');
       }
     });
   }
@@ -75,12 +89,24 @@ const LoginPage = () => {
   const handleLogIn = async (data: handleLogInData) => {
     const { email, password } = data;
     const { user, error } = await supabase.auth.signIn({ email, password });
-    if (error) return;
-    dispatch(saveUser(user));
-    fetchDataUser(user?.id);
-    navigate('/start');
+    if (error) {
+      if (error.status === 400) {
+        notyficationsHandler(
+          'Invaild email or password',
+          NotyficationsStatusEnum.ERROR,
+        );
+      } else {
+        notyficationsHandler(
+          'Something went wrong',
+          NotyficationsStatusEnum.ERROR,
+        );
+      }
+      reset({ email: '', password: '' });
+    } else {
+      dispatch(saveUser(user));
+      fetchDataUser(user?.id);
+    }
   };
-  // TODO change id name
   return (
     <StyledWrapper>
       {created && (
@@ -116,6 +142,7 @@ const LoginPage = () => {
           Click here
         </button>
       </StyledInfoRegister>
+      <ToastContainer />
     </StyledWrapper>
   );
 };
