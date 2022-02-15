@@ -20,6 +20,12 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "camelcase": "off",
@@ -28,7 +34,6 @@
     "@typescript-eslint/no-shadow": ["error"],
     "no-param-reassign": "off",
     "no-use-before-define": "off",
-    "prettier/prettier": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react/jsx-props-no-spreading": "off",

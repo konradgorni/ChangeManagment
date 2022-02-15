@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer, ToolbarProps } from 'react-big-calendar';
 import moment from 'moment';
 import { ToastContainer } from 'react-toastify';
+import { css } from 'styled-components';
 import { StyledWrapper } from './MangerBoardPage.styled';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
@@ -52,7 +53,38 @@ const ManagerBoardPage = () => {
   const [showUsersScheduleInfo, setShowUsersScheduleInfo] = useState<boolean>(
     false,
   );
-
+  const getObjectToSend = (data: Date | null | undefined) => {
+    const time = moment(data).format('DD-MM-YYYY HH:mm');
+    return {
+      year: time.slice(6, 10),
+      month: time.slice(3, 5),
+      date: time.slice(0, 2),
+    };
+  };
+  const enumerateWidth = ({ year, month, date }: any) => {
+    const element = document.querySelector<HTMLElement>(
+      '.rbc-events-container',
+    );
+    const elChildren = document.querySelectorAll<HTMLElement>('.rbc-event');
+    const count = events.filter((el: any) => {
+      const obj = getObjectToSend(el.start);
+      if (obj) {
+        if (obj.year === year) {
+          if (obj.month === month) {
+            if (obj.date === date) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    });
+    if (element) {
+      if (elChildren) {
+        element.style.minWidth = `${count.length * 200}px`;
+      }
+    }
+  };
   const [currentIdEvent, setCurrentIdEvent] = useState<number | undefined>(
     undefined,
   );
@@ -126,14 +158,18 @@ const ManagerBoardPage = () => {
         title={title}
       />
     ),
-    toolbar: (props: ToolbarProps) => (
-      <CustomToolbar
-        props={props}
-        setsShowAddToScheduleModal={setsShowAddToScheduleModal}
-        setShowUsersScheduleInfo={setShowUsersScheduleInfo}
-        setCurrentDateView={setCurrentDateView}
-      />
-    ),
+    toolbar: (props: ToolbarProps) => {
+      const { date } = props;
+      enumerateWidth(getObjectToSend(date));
+      return (
+        <CustomToolbar
+          props={props}
+          setsShowAddToScheduleModal={setsShowAddToScheduleModal}
+          setShowUsersScheduleInfo={setShowUsersScheduleInfo}
+          setCurrentDateView={setCurrentDateView}
+        />
+      );
+    },
   };
 
   return (
@@ -147,6 +183,7 @@ const ManagerBoardPage = () => {
         endAccessor="end"
         style={{ height: '95vh', width: '100%' }}
         defaultView="day"
+        dayLayoutAlgorithm="no-overlap"
       />
       {showAddToScheduleModal && (
         <AddToScheduleModal

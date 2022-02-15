@@ -13,8 +13,9 @@ export const StyledContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
 `;
 export const StyledButtonsWrapper = styled.div`
-  margin-left: 30px;
   display: flex;
+  justify-content: flex-start;
 `;

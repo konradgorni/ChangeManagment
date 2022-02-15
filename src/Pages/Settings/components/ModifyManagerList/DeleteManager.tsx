@@ -80,7 +80,9 @@ const DeleteManager = ({
       <StyledErrorMesage>
         {errors.managerName?.value?.message}
       </StyledErrorMesage>
-      <StyledButton type="submit">Delete</StyledButton>
+      <StyledButton margin="0 0 10px 0" type="submit">
+        Delete
+      </StyledButton>
     </form>
   );
 };

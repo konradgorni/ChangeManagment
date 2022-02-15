@@ -2,7 +2,10 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { IEventData } from '../../typesManagerBoard';
 import { EmptyObject } from '../../../../store/slice/AuthSlice';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
-import { StyledWrapperButtons } from './CalendarCardEvent.styled';
+import {
+  StyledWrapper,
+  StyledWrapperButtons,
+} from './CalendarCardEvent.styled';
 
 interface CalendarCardEventProps {
   setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
@@ -35,8 +38,8 @@ const CalendarCardEvent = ({
     setCurrentEditEventData(obj);
   };
   return (
-    <div>
-      <h1>{title}</h1>
+    <StyledWrapper>
+      <h3>{title}</h3>
       <StyledWrapperButtons>
         <StyledButton type="submit" onClick={handleEdit}>
           Edit
@@ -45,7 +48,7 @@ const CalendarCardEvent = ({
           Delete
         </StyledButton>
       </StyledWrapperButtons>
-    </div>
+    </StyledWrapper>
   );
 };
 export default CalendarCardEvent;

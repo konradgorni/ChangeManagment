@@ -1,6 +1,10 @@
 import React from 'react';
 import { ToolbarProps } from 'react-big-calendar';
-import { StyledTitle, StyledWrapper } from './CustomToolbarSchedule.styled';
+import {
+  StyledButtonWrapper,
+  StyledTitle,
+  StyledWrapper,
+} from './CustomToolbarSchedule.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 
 interface CustomToolbarScheduleProps {
@@ -18,12 +22,14 @@ const CustomToolbarSchedule = ({ props }: CustomToolbarScheduleProps) => {
   return (
     <StyledWrapper>
       <StyledTitle>{label}</StyledTitle>
-      <StyledButton type="submit" onClick={handlePrev}>
-        PREV
-      </StyledButton>
-      <StyledButton type="submit" onClick={handleNext}>
-        NEXT
-      </StyledButton>
+      <StyledButtonWrapper>
+        <StyledButton type="submit" onClick={handlePrev}>
+          PREV
+        </StyledButton>
+        <StyledButton type="submit" onClick={handleNext}>
+          NEXT
+        </StyledButton>
+      </StyledButtonWrapper>
     </StyledWrapper>
   );
 };

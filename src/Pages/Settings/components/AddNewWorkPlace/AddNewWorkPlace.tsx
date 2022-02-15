@@ -64,7 +64,7 @@ const AddNewWorkPlace = ({ WorkPlacesListFetch }: AddNewWorkPlaceProps) => {
           <StyledInput type="text" id="test" {...register('workPlaceName')} />
         </StyledLabel>
         <StyledErrorMesage>{errors.workPlaceName?.message}</StyledErrorMesage>
-        <StyledButton padding="0 5px" type="submit">
+        <StyledButton margin="12px 0" padding="0 5px" type="submit">
           Add New Workplace
         </StyledButton>
       </form>

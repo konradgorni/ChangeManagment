@@ -2,10 +2,13 @@ import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
+  width: 100%;
+  padding-right: 0;
+  margin: 0;
   button {
-    font-size: 25px;
+    font-size: 14px;
     background-color: transparent;
     border: none;
     display: flex;
@@ -15,7 +18,6 @@ export const StyledWrapper = styled.div`
   }
 `;
 export const StyledLabel = styled.h3`
-  font-size: 18px;
+  font-size: 14px;
   letter-spacing: 1px;
-  margin-left: 10px;
 `;

@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { RootState } from '../../store/store';
 import CustomToolbarSchedule from './components/CustomToolbarSchedule/CustomToolbarSchedule';
-import WrapperCustomEvent from './components/WrapperCustomEvent/WrapperCustomEvent';
 import { StyledWrapper } from './SchedulePage.styled';
 import CoworkersModal from './components/CoworkersModal/CoworkersModal';
 import { IEvents } from '../ManagerBoard/typesManagerBoard';
@@ -22,6 +21,7 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../utils/notificationsHandler';
+import WrapperCustomEvent from './components/WrapperCustomEvent/WrapperCustomEvent';
 
 export interface IDataToFind {
   name: string;
@@ -78,6 +78,10 @@ const SchedulePage = () => {
       }
     });
   }, [user?.id]);
+
+  const Test = ({ children, value }: any) => {
+    return <p>xd</p>;
+  };
 
   const components = {
     month: {

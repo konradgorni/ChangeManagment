@@ -15,12 +15,16 @@ export const StyledButton = styled.button<StyledButtonProps>`
   border: none;
   padding: ${({ padding }) => padding || '0'};
   display: block;
-  min-width: 130px;
+  min-width: 120px;
   width: auto;
   font-size: 25px;
-  height: 45px;
+  height: 40px;
   cursor: pointer;
   margin: ${({ margin }) => margin};
+  @media (min-width: 1024px) {
+    min-width: 130px;
+    height: 45px;
+  }
 `;
 export const StyledLabel = styled.label<{ flexDirection?: string }>`
   display: flex;

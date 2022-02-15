@@ -1,5 +1,13 @@
-import React from 'react';
-import { StyledLink, StyledNav } from './Nav.styled';
+import React, { useState } from 'react';
+import {
+  HamburgerIconStyled,
+  StyledHamburgerWrapper,
+  StyledLink,
+  StyledList,
+  StyledLogo,
+  StyledLogoWrapper,
+  StyledNav,
+} from './Nav.styled';
 
 interface NavProps {
   isLogged: boolean;
@@ -8,29 +16,39 @@ interface NavProps {
 }
 
 const Nav = ({ isLogged, isManager, isAdmin }: NavProps) => {
+  const [show, setShow] = useState(false);
   return (
     <StyledNav>
+      <StyledHamburgerWrapper type="submit" onClick={() => setShow(!show)}>
+        <HamburgerIconStyled />
+      </StyledHamburgerWrapper>
       {isLogged && (
-        <ul>
-          <li>
-            <StyledLink logo="true" to="/">
+        <StyledList show={show}>
+          <StyledLogoWrapper>
+            <StyledLogo logo="true" to="/">
               CHM
-            </StyledLink>
-          </li>
+            </StyledLogo>
+          </StyledLogoWrapper>
           <li>
-            <StyledLink to="/schedule">Schedule</StyledLink>
+            <StyledLink onClick={() => setShow(false)} to="/schedule">
+              Schedule
+            </StyledLink>
           </li>
           {isManager && (
             <li>
-              <StyledLink to="/managerboard">ManagerBoard</StyledLink>
+              <StyledLink onClick={() => setShow(false)} to="/managerboard">
+                ManagerBoard
+              </StyledLink>
             </li>
           )}
           {isAdmin && (
             <li>
-              <StyledLink to="/settings">Settings</StyledLink>
+              <StyledLink onClick={() => setShow(false)} to="/settings">
+                Settings
+              </StyledLink>
             </li>
           )}
-        </ul>
+        </StyledList>
       )}
     </StyledNav>
   );

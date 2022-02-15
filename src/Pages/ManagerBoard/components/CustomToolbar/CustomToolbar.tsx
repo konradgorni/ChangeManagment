@@ -1,6 +1,10 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { ToolbarProps } from 'react-big-calendar';
-import { StyledWrapper, StyledTitle } from './CustomToolbar.styled';
+import {
+  StyledWrapper,
+  StyledTitle,
+  StyledButtonsWrapper,
+} from './CustomToolbar.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 
 interface CustomToolbarProps {
@@ -30,28 +34,29 @@ const CustomToolbar = ({
   return (
     <StyledWrapper>
       <StyledTitle>{label}</StyledTitle>
-
-      <StyledButton onClick={handlePrev} type="submit">
-        Prev
-      </StyledButton>
-      <StyledButton onClick={handleNext} type="submit">
-        Next
-      </StyledButton>
-      <StyledButton
-        onClick={() => setsShowAddToScheduleModal(true)}
-        type="submit"
-      >
-        Add
-      </StyledButton>
-      <StyledButton
-        onClick={() => {
-          setCurrentDateView(date);
-          setShowUsersScheduleInfo(true);
-        }}
-        type="submit"
-      >
-        Notes
-      </StyledButton>
+      <StyledButtonsWrapper>
+        <StyledButton onClick={handlePrev} type="submit">
+          Prev
+        </StyledButton>
+        <StyledButton onClick={handleNext} type="submit">
+          Next
+        </StyledButton>
+        <StyledButton
+          onClick={() => setsShowAddToScheduleModal(true)}
+          type="submit"
+        >
+          Add
+        </StyledButton>
+        <StyledButton
+          onClick={() => {
+            setCurrentDateView(date);
+            setShowUsersScheduleInfo(true);
+          }}
+          type="submit"
+        >
+          Notes
+        </StyledButton>
+      </StyledButtonsWrapper>
     </StyledWrapper>
   );
 };

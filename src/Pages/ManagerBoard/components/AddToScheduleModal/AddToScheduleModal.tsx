@@ -35,7 +35,6 @@ const AddToScheduleModal = ({
   handleAdd,
   setsShowAddToScheduleModal,
 }: AddToScheduleModalProps) => {
-  // TODO CO JESLI KTOS NIE WYBIERZE ELEMENTU Z LISTY ON CHANGE
   return (
     <StyledWrapper>
       <div>

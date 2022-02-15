@@ -1,7 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import moment from 'moment';
-import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 import { IDataToFind } from '../../SchedulePage';
+import {
+  StyledWrapper,
+  StyledButton,
+  StyledSearchIcon,
+} from './WrapperCustomEvent.styled';
 
 interface IEvent {
   title: string;
@@ -50,12 +54,11 @@ const WrapperCustomEvent = ({
     setShowCoWorkersModal(true);
   };
   return (
-    <div>
-      <h1>{title}</h1>
+    <StyledWrapper>
       <StyledButton type="submit" onClick={handleCoworkers}>
-        Coworkers
+        <StyledSearchIcon />
       </StyledButton>
-    </div>
+    </StyledWrapper>
   );
 };
 export default WrapperCustomEvent;

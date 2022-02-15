@@ -26,6 +26,7 @@ export const StyledInfoRegister = styled.p`
     padding-left: 5px;
     font-weight: 600;
     cursor: pointer;
+    letter-spacing: 1px;
   }
 `;
 export const StyledAccountCreatedInfo = styled.h2`
