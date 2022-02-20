@@ -4,8 +4,6 @@ import {
   StyledHamburgerWrapper,
   StyledLink,
   StyledList,
-  StyledLogo,
-  StyledLogoWrapper,
   StyledNav,
 } from './Nav.styled';
 
@@ -24,11 +22,6 @@ const Nav = ({ isLogged, isManager, isAdmin }: NavProps) => {
       </StyledHamburgerWrapper>
       {isLogged && (
         <StyledList show={show}>
-          <StyledLogoWrapper>
-            <StyledLogo logo="true" to="/">
-              CHM
-            </StyledLogo>
-          </StyledLogoWrapper>
           <li>
             <StyledLink onClick={() => setShow(false)} to="/schedule">
               Schedule

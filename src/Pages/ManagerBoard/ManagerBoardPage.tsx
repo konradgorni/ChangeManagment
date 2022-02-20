@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer, ToolbarProps } from 'react-big-calendar';
 import moment from 'moment';
 import { ToastContainer } from 'react-toastify';
-import { css } from 'styled-components';
 import { StyledWrapper } from './MangerBoardPage.styled';
 import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
@@ -61,12 +60,21 @@ const ManagerBoardPage = () => {
       date: time.slice(0, 2),
     };
   };
-  const enumerateWidth = ({ year, month, date }: any) => {
+  const enumerateWidth = ({
+    year,
+    month,
+    date,
+  }: {
+    year: string;
+    month: string;
+    date: string;
+  }) => {
     const element = document.querySelector<HTMLElement>(
       '.rbc-events-container',
     );
     const elChildren = document.querySelectorAll<HTMLElement>('.rbc-event');
-    const count = events.filter((el: any) => {
+    const timeSlot = document.querySelector<HTMLElement>('.rbc-day-slot');
+    const count = events.filter((el: IEvents) => {
       const obj = getObjectToSend(el.start);
       if (obj) {
         if (obj.year === year) {
@@ -82,6 +90,9 @@ const ManagerBoardPage = () => {
     if (element) {
       if (elChildren) {
         element.style.minWidth = `${count.length * 200}px`;
+        if (timeSlot) {
+          timeSlot.style.minWidth = `${count.length * 200}px`;
+        }
       }
     }
   };

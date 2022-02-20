@@ -4,6 +4,7 @@ import {
   StyledWrapper,
   StyledTitle,
   StyledButtonsWrapper,
+  StyledButtonsContainer,
 } from './CustomToolbar.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 
@@ -34,29 +35,33 @@ const CustomToolbar = ({
   return (
     <StyledWrapper>
       <StyledTitle>{label}</StyledTitle>
-      <StyledButtonsWrapper>
-        <StyledButton onClick={handlePrev} type="submit">
-          Prev
-        </StyledButton>
-        <StyledButton onClick={handleNext} type="submit">
-          Next
-        </StyledButton>
-        <StyledButton
-          onClick={() => setsShowAddToScheduleModal(true)}
-          type="submit"
-        >
-          Add
-        </StyledButton>
-        <StyledButton
-          onClick={() => {
-            setCurrentDateView(date);
-            setShowUsersScheduleInfo(true);
-          }}
-          type="submit"
-        >
-          Notes
-        </StyledButton>
-      </StyledButtonsWrapper>
+      <StyledButtonsContainer>
+        <StyledButtonsWrapper>
+          <StyledButton onClick={handlePrev} type="submit">
+            Prev
+          </StyledButton>
+          <StyledButton onClick={handleNext} type="submit">
+            Next
+          </StyledButton>
+        </StyledButtonsWrapper>
+        <StyledButtonsWrapper>
+          <StyledButton
+            onClick={() => setsShowAddToScheduleModal(true)}
+            type="submit"
+          >
+            Add
+          </StyledButton>
+          <StyledButton
+            onClick={() => {
+              setCurrentDateView(date);
+              setShowUsersScheduleInfo(true);
+            }}
+            type="submit"
+          >
+            Notes
+          </StyledButton>
+        </StyledButtonsWrapper>
+      </StyledButtonsContainer>
     </StyledWrapper>
   );
 };

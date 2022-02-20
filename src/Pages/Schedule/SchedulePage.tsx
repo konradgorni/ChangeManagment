@@ -79,10 +79,6 @@ const SchedulePage = () => {
     });
   }, [user?.id]);
 
-  const Test = ({ children, value }: any) => {
-    return <p>xd</p>;
-  };
-
   const components = {
     month: {
       dateHeader: (props: DateHeaderProps) => (
@@ -94,11 +90,10 @@ const SchedulePage = () => {
       ),
     },
     toolbar: (props: ToolbarProps) => <CustomToolbarSchedule props={props} />,
-    event: ({ event, title }: { event: IEvent; title: string }) => (
+    event: ({ event }: { event: IEvent }) => (
       <WrapperCustomEvent
         setShowCoWorkersModal={setShowCoWorkersModal}
         event={event}
-        title={title}
         setDataToFindCoWorkers={setDataToFindCoWorkers}
       />
     ),

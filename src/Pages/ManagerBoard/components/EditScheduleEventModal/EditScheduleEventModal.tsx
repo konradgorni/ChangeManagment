@@ -4,6 +4,7 @@ import moment from 'moment';
 import { ToastContainer } from 'react-toastify';
 import {
   StyledButtonWrapper,
+  StyledContainer,
   StyledWrapper,
 } from './EditScheduleEventModal.styled';
 import { EmptyObject } from '../../../../store/slice/AuthSlice';
@@ -107,7 +108,7 @@ const EditScheduleEventModal = ({
 
   return (
     <StyledWrapper>
-      <div>
+      <StyledContainer>
         <h1>Workers list</h1>
         <Select
           onChange={(item) => setSelectedWorker(item)}
@@ -138,7 +139,7 @@ const EditScheduleEventModal = ({
             X
           </StyledButton>
         </StyledButtonWrapper>
-      </div>
+      </StyledContainer>
       <ToastContainer />
     </StyledWrapper>
   );

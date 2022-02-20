@@ -2,18 +2,39 @@ import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
   position: absolute;
-  top: 9vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   height: auto;
-  left: 0;
+  overflow: scroll;
   background-color: #212121;
   border-radius: 2px;
-  border: 2px solid #fab700;
   padding: 2%;
   z-index: 9;
+  @media (min-width: 1300px) {
+    padding: 1%;
+  }
   h2 {
     color: #fab700;
     margin-bottom: 20px;
+    font-size: 25px;
+    text-align: center;
+    @media (min-width: 1024px) {
+      font-size: 30px;
+    }
+  }
+  h3 {
+    font-size: 20px;
+    @media (min-width: 1024px) {
+      font-size: 25px;
+    }
+  }
+  @media (min-width: 700px) {
+    width: 50vh;
+  }
+  @media (min-width: 1300px) {
+    width: 45vh;
   }
 `;
 export const StyledWorkerCard = styled.div`
@@ -21,6 +42,10 @@ export const StyledWorkerCard = styled.div`
   color: white;
   p {
     margin: 2px 0;
+    font-size: 18px;
+    @media (min-width: 1024px) {
+      font-size: 22px;
+    }
   }
 `;
 export const StyledButtonWrapper = styled.div`

@@ -79,7 +79,11 @@ const UsersScheduleInfo = ({
             </div>
           ))}
       </StyledUsersInfoWrapper>
-      <StyledButton onClick={() => hideModal(false)} background="red">
+      <StyledButton
+        margin="0 auto"
+        onClick={() => hideModal(false)}
+        background="red"
+      >
         X
       </StyledButton>
     </StyledWrapper>

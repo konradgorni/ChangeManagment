@@ -40,11 +40,11 @@ const OnSelectModal = ({
   const [checked, setChecked] = useState(false);
   const schema = yup.object({
     startTimeRange: yup.string().when('dummy', {
-      is: () => checked === false,
+      is: () => !checked,
       then: yup.string().required('StartTimeRange is required.'),
     }),
     endTimeRange: yup.string().when('dummy', {
-      is: () => checked === false,
+      is: () => !checked,
       then: yup.string().required('EndTimeRange is required.'),
     }),
   });

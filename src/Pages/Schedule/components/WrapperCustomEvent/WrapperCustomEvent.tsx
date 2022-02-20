@@ -19,14 +19,12 @@ interface IEvent {
 
 interface WrapperCustomEventProps {
   event: IEvent;
-  title: string;
   setShowCoWorkersModal: Dispatch<SetStateAction<boolean>>;
   setDataToFindCoWorkers: Dispatch<SetStateAction<IDataToFind | undefined>>;
 }
 
 const WrapperCustomEvent = ({
   event,
-  title,
   setShowCoWorkersModal,
   setDataToFindCoWorkers,
 }: WrapperCustomEventProps) => {
@@ -54,8 +52,8 @@ const WrapperCustomEvent = ({
     setShowCoWorkersModal(true);
   };
   return (
-    <StyledWrapper>
-      <StyledButton type="submit" onClick={handleCoworkers}>
+    <StyledWrapper onClick={handleCoworkers}>
+      <StyledButton type="submit">
         <StyledSearchIcon />
       </StyledButton>
     </StyledWrapper>

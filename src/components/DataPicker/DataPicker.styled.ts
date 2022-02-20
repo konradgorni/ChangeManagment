@@ -11,7 +11,7 @@ export const StyledDateWrapper = styled.div`
     margin-bottom: 10px;
   }
   input {
-    width: 60%;
+    width: 80%;
     height: 38px;
   }
 `;

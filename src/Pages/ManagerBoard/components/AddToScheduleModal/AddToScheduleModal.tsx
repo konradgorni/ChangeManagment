@@ -3,6 +3,7 @@ import Select from 'react-select';
 import DataPicker from '../../../../components/DataPicker/DataPicker';
 import {
   StyledButtonWrapper,
+  StyledContainer,
   StyledWrapper,
 } from './AddToScheduleModal.styled';
 import {
@@ -37,7 +38,7 @@ const AddToScheduleModal = ({
 }: AddToScheduleModalProps) => {
   return (
     <StyledWrapper>
-      <div>
+      <StyledContainer>
         <h1>Workers list</h1>
         <Select
           onChange={(item) => {
@@ -71,7 +72,7 @@ const AddToScheduleModal = ({
             X
           </StyledButton>
         </StyledButtonWrapper>
-      </div>
+      </StyledContainer>
     </StyledWrapper>
   );
 };

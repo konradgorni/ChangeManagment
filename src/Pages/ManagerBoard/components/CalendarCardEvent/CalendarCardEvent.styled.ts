@@ -12,7 +12,6 @@ export const StyledWrapper = styled.div`
     margin: 20px 0;
     line-height: 30px;
     font-size: 22px;
-    text-align: center;
     width: 100%;
   }
 `;

@@ -1,6 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { DateHeaderProps } from 'react-big-calendar';
-import { StyledLabel, StyledWrapper } from './CustomDateHeaderDay.styled';
+import {
+  StyledIcon,
+  StyledLabel,
+  StyledWrapper,
+} from './CustomDateHeaderDay.styled';
 
 interface CustomDateHeaderDayProps {
   props: DateHeaderProps;
@@ -20,9 +24,7 @@ const CustomDateHeaderDay = ({
   };
   return (
     <StyledWrapper>
-      <button type="submit" onClick={handleClick}>
-        +
-      </button>
+      <StyledIcon onClick={handleClick} />
       <StyledLabel>{label}</StyledLabel>
     </StyledWrapper>
   );
