@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import moment from 'moment';
 import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { DateHeaderProps } from 'react-big-calendar';
+import DatePicker from 'react-datepicker';
 import {
   StyledWrapper,
   StyledCheckboxInput,
@@ -20,6 +21,7 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
+import { handleMinutesConver } from '../../../../utils/handleMinutesConvert';
 
 interface OnSelectModalProps {
   dataObj: DateHeaderProps | null;
@@ -49,10 +51,10 @@ const OnSelectModal = ({
     }),
   });
   const {
-    register,
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<IFormData>({
     resolver: yupResolver(schema),
   });
@@ -61,6 +63,8 @@ const OnSelectModal = ({
     if (dataObj !== null) {
       const { date } = dataObj;
       const time = moment(date).format('DD-MM-YYYY HH:mm');
+      const startTime = moment(data.startTimeRange);
+      const endTime = moment(data.endTimeRange);
       const obj = {
         userId: user.id,
         dayOff: checked,
@@ -70,8 +74,10 @@ const OnSelectModal = ({
           date: time.slice(0, 2),
         },
         timeRange: {
-          start: data.startTimeRange,
-          end: data.endTimeRange,
+          start: `${startTime.hours()}:${handleMinutesConver(
+            startTime.minutes(),
+          )}`,
+          end: `${endTime.hours()}:${handleMinutesConver(endTime.minutes())}`,
         },
         confirmed: false,
       };
@@ -113,8 +119,40 @@ const OnSelectModal = ({
         </StyledLabel>
         <h2>Time range</h2>
         <StyledInputTimeWrapper>
-          <input type="time" {...register('startTimeRange')} />
-          <input type="time" {...register('endTimeRange')} />
+          <Controller
+            name="startTimeRange"
+            control={control}
+            render={({ field }: any) => (
+              <DatePicker
+                placeholderText="Select start date"
+                onChange={(date) => field.onChange(date)}
+                selected={field?.value}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Time"
+                timeFormat="HH:mm"
+                dateFormat="HH:mm"
+              />
+            )}
+          />
+          <Controller
+            name="endTimeRange"
+            control={control}
+            render={({ field }: any) => (
+              <DatePicker
+                placeholderText="Select end date"
+                onChange={(date) => field.onChange(date)}
+                selected={field?.value}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Time"
+                timeFormat="HH:mm"
+                dateFormat="HH:mm"
+              />
+            )}
+          />
         </StyledInputTimeWrapper>
         <StyledErrorMesage>{errors.startTimeRange?.message}</StyledErrorMesage>
         <StyledErrorMesage>{errors.endTimeRange?.message}</StyledErrorMesage>

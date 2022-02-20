@@ -27,8 +27,10 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../utils/notificationsHandler';
+import { handleMinutesConver } from '../../utils/handleMinutesConvert';
 
 const ManagerBoardPage = () => {
+  moment.locale('en-GB');
   const localizer = momentLocalizer(moment);
   const [showEditScheduleModal, setShowEditScheduleModal] = useState<boolean>(
     false,
@@ -44,7 +46,9 @@ const ManagerBoardPage = () => {
   const [events, setEvents] = useState<IEvents[]>([]);
   const [workersList, setWorkersList] = useState<IworkersList[]>([]);
   const [workPlaceList, setWorkPlaceList] = useState<IReactSelectData[]>();
-  const [dataPickerData, setDataPickerData] = useState<IdataPickerData>();
+  const [dataPickerData, setDataPickerData] = useState<
+    IdataPickerData | undefined
+  >();
   const [selectedWorker, setSelectedWorker] = useState<
     IselectedWorker | EmptyObject | null
   >({});
@@ -182,12 +186,22 @@ const ManagerBoardPage = () => {
       );
     },
   };
-
+  const formats = {
+    timeGutterFormat: 'HH:mm',
+    eventTimeRangeFormat: (range: { start: Date; end: Date }) => {
+      const startTime = moment(range.start);
+      const endTime = moment(range.end);
+      return `${startTime.hours()}:${handleMinutesConver(
+        startTime.minutes(),
+      )}-${endTime.hours()}:${handleMinutesConver(endTime.minutes())}`;
+    },
+  };
   return (
     <StyledWrapper>
       <Calendar
         components={components}
         localizer={localizer}
+        formats={formats}
         events={events}
         onSelectEvent={({ id }: { id: number }) => setCurrentIdEvent(id)}
         startAccessor="start"

@@ -9,12 +9,7 @@ import {
 import { StyledDateWrapper, StyledWrapper } from './DataPicker.styled';
 import { IEditData } from '../../Pages/ManagerBoard/components/EditScheduleEventModal/EditScheduleEventModalTypes';
 
-type stateDateType = null | Date;
-
-interface timePicker {
-  hour?: string | undefined;
-  min?: string;
-}
+type stateDateType = null | Date | undefined;
 
 interface dataPickerProps {
   setDataPickerData: Dispatch<SetStateAction<IdataPickerData | undefined>>;
@@ -27,10 +22,17 @@ const DataPicker = ({
   editData,
   typeDataPicker,
 }: dataPickerProps) => {
-  const [selectedDate, setSelectedDate] = useState<stateDateType>();
-  const [startTimePicker, setStartTimePicker] = useState<timePicker>();
-  const [selectedDateEnd, setSelectedDateEnd] = useState<stateDateType>();
-  const [endTimePicker, setEndTimePicker] = useState<timePicker>();
+  const defaultDate = new Date();
+  const [selectedDate, setSelectedDate] = useState<stateDateType>(defaultDate);
+  const [startTimePicker, setStartTimePicker] = useState<stateDateType>(
+    defaultDate,
+  );
+  const [selectedDateEnd, setSelectedDateEnd] = useState<stateDateType>(
+    defaultDate,
+  );
+  const [endTimePicker, setEndTimePicker] = useState<stateDateType>(
+    defaultDate,
+  );
 
   useEffect(() => {
     handleClick();
@@ -39,43 +41,29 @@ const DataPicker = ({
     if (typeDataPicker === DataPickerTypeEnum.EDIT) {
       setSelectedDate(editData?.s);
       setSelectedDateEnd(editData?.e);
-      setStartTimePicker({
-        hour: editData?.timeStart?.slice(0, 2),
-        min: editData?.timeStart?.slice(3, 5),
-      });
-      setEndTimePicker({
-        hour: editData?.timeEnd?.slice(0, 2),
-        min: editData?.timeEnd?.slice(3, 5),
-      });
+      setStartTimePicker(editData?.s);
+      setEndTimePicker(editData?.e);
     }
   }, [editData]);
 
   const getObjectToSend = (
     data: Date | null | undefined,
-    hour: string | undefined,
-    min: string | undefined,
+    dateTime: stateDateType,
   ) => {
     const time = moment(data).format('DD-MM-YYYY HH:mm');
+    const time2 = moment(dateTime);
     return {
       year: time.slice(6, 10),
       month: time.slice(3, 5),
       date: time.slice(0, 2),
-      hours: hour,
-      minutes: min,
+      hours: `${time2.hours()}`,
+      minutes: `${time2.minutes()}`,
     };
   };
 
   const handleClick = () => {
-    const startObj = getObjectToSend(
-      selectedDate,
-      startTimePicker?.hour,
-      startTimePicker?.min,
-    );
-    const endObj = getObjectToSend(
-      selectedDateEnd,
-      endTimePicker?.hour,
-      endTimePicker?.min,
-    );
+    const startObj = getObjectToSend(selectedDate, startTimePicker);
+    const endObj = getObjectToSend(selectedDateEnd, endTimePicker);
     setDataPickerData({ startObj, endObj });
   };
 
@@ -91,16 +79,19 @@ const DataPicker = ({
           dateFormat="dd/MM/yyyy"
           placeholderText="start date"
         />
-        <input
-          type="time"
-          onChange={(e) => {
-            const obj = {
-              hour: e.target.value.slice(0, 2),
-              min: e.target.value.slice(3, 5),
-            };
-            setStartTimePicker(obj);
+        <DatePicker
+          selected={startTimePicker}
+          onChange={(date) => {
+            if (date) {
+              setStartTimePicker(date);
+            }
           }}
-          value={`${startTimePicker?.hour}:${startTimePicker?.min}`}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          timeFormat="HH:mm"
+          dateFormat="HH:mm"
         />
       </StyledDateWrapper>
       <StyledDateWrapper>
@@ -114,16 +105,19 @@ const DataPicker = ({
           dateFormat="dd/MM/yyyy"
           placeholderText="end date"
         />
-        <input
-          type="time"
-          value={`${endTimePicker?.hour}:${endTimePicker?.min}`}
-          onChange={(e) => {
-            const obj = {
-              hour: e.target.value.slice(0, 2),
-              min: e.target.value.slice(3, 5),
-            };
-            setEndTimePicker(obj);
+        <DatePicker
+          selected={endTimePicker}
+          onChange={(date) => {
+            if (date) {
+              setEndTimePicker(date);
+            }
           }}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          timeCaption="Time"
+          timeFormat="HH:mm"
+          dateFormat="HH:mm"
         />
       </StyledDateWrapper>
     </StyledWrapper>
