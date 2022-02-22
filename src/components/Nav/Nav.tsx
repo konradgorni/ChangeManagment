@@ -5,6 +5,7 @@ import {
   StyledLink,
   StyledList,
   StyledNav,
+  XIconStyled,
 } from './Nav.styled';
 
 interface NavProps {
@@ -18,7 +19,7 @@ const Nav = ({ isLogged, isManager, isAdmin }: NavProps) => {
   return (
     <StyledNav>
       <StyledHamburgerWrapper type="submit" onClick={() => setShow(!show)}>
-        <HamburgerIconStyled />
+        {show ? <XIconStyled /> : <HamburgerIconStyled />}
       </StyledHamburgerWrapper>
       {isLogged && (
         <StyledList show={show}>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Icon } from './hamburger.svg';
+import { ReactComponent as HamburgerIcon } from './hamburger.svg';
+import { ReactComponent as XIcon } from './x.svg';
 
 export const StyledNav = styled.nav`
   min-height: 5vh;
@@ -20,13 +21,18 @@ export const StyledHamburgerWrapper = styled.button`
     display: none;
   }
 `;
-export const HamburgerIconStyled = styled(Icon)`
+export const HamburgerIconStyled = styled(HamburgerIcon)`
+  width: 40px;
+  height: 40px;
+  color: white;
+`;
+export const XIconStyled = styled(XIcon)`
   width: 40px;
   height: 40px;
   color: white;
 `;
 
-export const StyledList = styled.ul<any>`
+export const StyledList = styled.ul<{ show: boolean }>`
   top: 5vh;
   z-index: 10;
   height: 95vh;
@@ -49,7 +55,7 @@ export const StyledList = styled.ul<any>`
   }
 `;
 
-export const StyledLink = styled(Link)<any>`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   color: white;
   font-size: 45px;
