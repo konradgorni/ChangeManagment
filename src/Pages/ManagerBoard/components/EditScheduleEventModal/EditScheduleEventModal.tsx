@@ -11,7 +11,9 @@ import { EmptyObject } from '../../../../store/slice/AuthSlice';
 import DataPicker from '../../../../components/DataPicker/DataPicker';
 import {
   DataPickerTypeEnum,
+  EditScheduleEventModalProps,
   IdataPickerData,
+  IEditData,
   IworkersList,
 } from '../../typesManagerBoard';
 import { updateEventSchedule } from '../../utils/updateEventSchedule';
@@ -21,10 +23,6 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
-import {
-  EditScheduleEventModalProps,
-  IEditData,
-} from './EditScheduleEventModalTypes';
 
 const EditScheduleEventModal = ({
   workersList,
@@ -48,12 +46,10 @@ const EditScheduleEventModal = ({
     IEditData | EmptyObject | undefined
   >();
 
-  useEffect(() => {
-    const { userId, workPlace, start, end, id } = currentEditEventData;
-    setEventId(id);
+  const prepareEditDataObject = (start: Date, end: Date) => {
     const editedStartDate = moment(start).format('DD-MM-YYYY HH:mm');
     const editedEndDate = moment(end).format('DD-MM-YYYY HH:mm');
-    const obj = {
+    const preparedObject = {
       s: start,
       e: end,
       timeStart: editedStartDate.slice(
@@ -65,7 +61,14 @@ const EditScheduleEventModal = ({
         editedEndDate.length,
       ),
     };
-    setEditData(obj);
+    setEditData(preparedObject);
+  };
+
+  useEffect(() => {
+    const { userId, workPlace, start, end, id } = currentEditEventData;
+    setEventId(id);
+    prepareEditDataObject(start, end);
+
     if (workersList) {
       const findEmployee = workersList.filter(
         (el: IworkersList) => el.value.userId === userId,
@@ -81,7 +84,7 @@ const EditScheduleEventModal = ({
   }, []);
 
   const handleSave = () => {
-    const obj = {
+    const objToSend = {
       userId: selectedWorker?.value.userId,
       Name: selectedWorker?.value.Name,
       Surname: selectedWorker?.value.Surname,
@@ -89,7 +92,7 @@ const EditScheduleEventModal = ({
       startDate: dataPickerData?.startObj,
       endDate: dataPickerData?.endObj,
     };
-    updateEventSchedule(obj, eventId).then(({ error }) => {
+    updateEventSchedule(objToSend, eventId).then(({ error }) => {
       if (error) {
         notyficationsHandler(
           'Error with update',

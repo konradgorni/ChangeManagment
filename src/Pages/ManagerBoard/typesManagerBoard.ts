@@ -92,3 +92,19 @@ export interface CustomToolbarProps {
   setShowUsersScheduleInfo: Dispatch<SetStateAction<boolean>>;
   setCurrentDateView: Dispatch<SetStateAction<Date>>;
 }
+// EditScheduleEventModal interfaces
+
+export interface IEditData {
+  e?: Date;
+  s?: Date;
+  timeEnd?: string;
+  timeStart?: string;
+}
+
+export interface EditScheduleEventModalProps {
+  workersList: IworkersList[];
+  workPlaceList?: IReactSelectData[];
+  setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
+  currentEditEventData: IEventData | EmptyObject;
+  fetchData: () => void;
+}
