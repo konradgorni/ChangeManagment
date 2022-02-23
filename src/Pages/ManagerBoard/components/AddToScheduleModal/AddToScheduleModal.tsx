@@ -1,8 +1,7 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import DataPicker from '../../../../components/DataPicker/DataPicker';
 import {
   StyledButtonWrapper,
@@ -10,51 +9,21 @@ import {
   StyledWrapper,
 } from './AddToScheduleModal.styled';
 import {
+  AddToScheduleModalProps,
   DataPickerTypeEnum,
   IdataPickerData,
-  IworkersList,
+  IFormDataAddToScheduleModal,
 } from '../../typesManagerBoard';
 import {
   StyledButton,
   StyledErrorMesage,
 } from '../../../../styles/globalStylesComponents.styled';
-import { IReactSelectData } from '../../../../utils/globalTypes';
 import { sendDataToDataBase } from '../../../../utils/sendDataToDataBase';
 import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
-
-interface AddToScheduleModalProps {
-  workersList: IworkersList[];
-  workPlaceList?: IReactSelectData[];
-  fetchData: () => void;
-  setsShowAddToScheduleModal: Dispatch<SetStateAction<boolean>>;
-}
-const schema = yup.object({
-  selectedWorker: yup
-    .object()
-    .shape({
-      value: yup.object().shape({
-        userId: yup.string(),
-        Name: yup.string(),
-        Surname: yup.string(),
-      }),
-      label: yup.string().required('This field is required.'),
-    })
-    .required('This field is required.'),
-  selectedWorkPlace: yup
-    .object()
-    .shape({
-      value: yup.string(),
-      label: yup.string().required('This field is required.'),
-    })
-    .required('This field is required.'),
-});
-interface IFormData {
-  selectedWorker: IworkersList;
-  selectedWorkPlace: IReactSelectData | undefined;
-}
+import { schema } from './utils/schema';
 
 const AddToScheduleModal = ({
   workersList,
@@ -69,12 +38,12 @@ const AddToScheduleModal = ({
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IFormData>({
+  } = useForm<IFormDataAddToScheduleModal>({
     resolver: yupResolver(schema),
   });
-  const handleForm = (data: IFormData) => {
+  const handleForm = (data: IFormDataAddToScheduleModal) => {
     const { selectedWorker, selectedWorkPlace } = data;
-    const obj = {
+    const objToSend = {
       userId: selectedWorker?.value.userId,
       startDate: dataPickerData?.startObj,
       endDate: dataPickerData?.endObj,
@@ -82,7 +51,7 @@ const AddToScheduleModal = ({
       Name: selectedWorker?.value.Name,
       Surname: selectedWorker?.value.Surname,
     };
-    sendDataToDataBase('schedule', obj).then(({ error }) => {
+    sendDataToDataBase('schedule', objToSend).then(({ error }) => {
       if (error) {
         notyficationsHandler(
           'Problem with adding',

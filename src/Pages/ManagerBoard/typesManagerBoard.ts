@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { IReactSelectData } from '../../utils/globalTypes';
 
 export interface IworkersListValueObject {
@@ -52,3 +53,16 @@ export enum DataPickerTypeEnum {
 }
 
 export type fetchWorkPlacesType = IReactSelectData[] | undefined;
+
+// AddToScheduleModal interfaces
+
+export interface AddToScheduleModalProps {
+  workersList: IworkersList[];
+  workPlaceList?: IReactSelectData[];
+  fetchData: () => void;
+  setsShowAddToScheduleModal: Dispatch<SetStateAction<boolean>>;
+}
+export interface IFormDataAddToScheduleModal {
+  selectedWorker: IworkersList;
+  selectedWorkPlace: IReactSelectData | undefined;
+}
