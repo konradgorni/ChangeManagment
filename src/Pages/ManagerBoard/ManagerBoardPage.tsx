@@ -6,7 +6,7 @@ import { StyledWrapper } from './MangerBoardPage.styled';
 import { EmptyObject } from '../../store/slice/AuthSlice';
 import { IworkersList, IEvents, IEventData } from './typesManagerBoard';
 import AddToScheduleModal from './components/AddToScheduleModal/AddToScheduleModal';
-import ConfirmDeleteEvent from './components/AddToScheduleModal/ConfirmDeleteEvent';
+import ConfirmDeleteEvent from './components/DeleteModal/ConfirmDeleteEvent';
 import EditScheduleEventModal from './components/EditScheduleEventModal/EditScheduleEventModal';
 import { fetchEventsSchedule } from '../../utils/fetchEventsSchedule';
 import { fetchWorkPlaces } from './utils/fetchWorkPlaces';

@@ -9,12 +9,7 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
-
-interface ConfirmDeleteEventProps {
-  currentIdEvent: number | undefined;
-  setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
-  fetchData: () => void;
-}
+import { ConfirmDeleteEventProps } from '../../typesManagerBoard';
 
 const ConfirmDeleteEvent = ({
   currentIdEvent,

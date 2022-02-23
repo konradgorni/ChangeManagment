@@ -66,3 +66,10 @@ export interface IFormDataAddToScheduleModal {
   selectedWorker: IworkersList;
   selectedWorkPlace: IReactSelectData | undefined;
 }
+
+// ConfirmDeleteEvent props interface
+export interface ConfirmDeleteEventProps {
+  currentIdEvent: number | undefined;
+  setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
+  fetchData: () => void;
+}
