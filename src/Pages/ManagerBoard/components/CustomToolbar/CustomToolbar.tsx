@@ -1,5 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { ToolbarProps } from 'react-big-calendar';
+import React from 'react';
 import {
   StyledWrapper,
   StyledTitle,
@@ -7,13 +6,7 @@ import {
   StyledButtonsContainer,
 } from './CustomToolbar.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
-
-interface CustomToolbarProps {
-  props: ToolbarProps;
-  setsShowAddToScheduleModal: Dispatch<SetStateAction<boolean>>;
-  setShowUsersScheduleInfo: Dispatch<SetStateAction<boolean>>;
-  setCurrentDateView: Dispatch<SetStateAction<Date>>;
-}
+import { CustomToolbarProps } from '../../typesManagerBoard';
 
 const CustomToolbar = ({
   props,

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { ToolbarProps } from 'react-big-calendar';
 import { IReactSelectData } from '../../utils/globalTypes';
 import { EmptyObject } from '../../store/slice/AuthSlice';
 
@@ -82,4 +83,12 @@ export interface CalendarCardEventProps {
   setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
   setCurrentEditEventData: Dispatch<SetStateAction<IEventData | EmptyObject>>;
   event: IEventData;
+}
+// CustomToolbar props interface
+
+export interface CustomToolbarProps {
+  props: ToolbarProps;
+  setsShowAddToScheduleModal: Dispatch<SetStateAction<boolean>>;
+  setShowUsersScheduleInfo: Dispatch<SetStateAction<boolean>>;
+  setCurrentDateView: Dispatch<SetStateAction<Date>>;
 }
