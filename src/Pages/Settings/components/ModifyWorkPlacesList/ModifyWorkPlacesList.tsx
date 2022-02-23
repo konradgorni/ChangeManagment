@@ -38,7 +38,6 @@ const ModifyWorkPlacesList = ({
 }: IModifyWorkPlacesListProps) => {
   const [showEditOptions, setShowEditOptions] = useState<boolean>(false);
   const [editSchema, setEditSchema] = useState<boolean>(false);
-  const [selectPlaceholder, setSelectPlaceholder] = useState<string>('Select');
 
   const schema = yup.object().shape({
     workPlaceName: yup
@@ -116,7 +115,6 @@ const ModifyWorkPlacesList = ({
             workPlaceName: { label: '', value: '' },
             workPlaceElementRename: '',
           });
-          setSelectPlaceholder('Select');
         }
       },
     );

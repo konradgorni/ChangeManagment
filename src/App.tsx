@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
   Navigate,
 } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ import ErrorPage from './Pages/ErrorPage/ErrorPage';
 import LoginPage from './Pages/Login/LoginPage';
 import RegisterPage from './Pages/Register/RegisterPage';
 import { RootState } from './store/store';
-import HomePage from './Pages/Home/HomePage';
 import Protected from './Pages/Protected';
 import SchedulePage from './Pages/Schedule/SchedulePage';
 import ManagerBoardPage from './Pages/ManagerBoard/ManagerBoardPage';

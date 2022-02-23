@@ -43,11 +43,11 @@ const OnSelectModal = ({
   const schema = yup.object({
     startTimeRange: yup.string().when('dummy', {
       is: () => !checked,
-      then: yup.string().required('StartTimeRange is required.'),
+      then: yup.string().required('Start time is required.'),
     }),
     endTimeRange: yup.string().when('dummy', {
       is: () => !checked,
-      then: yup.string().required('EndTimeRange is required.'),
+      then: yup.string().required('End time is required.'),
     }),
   });
   const {
@@ -124,7 +124,7 @@ const OnSelectModal = ({
             control={control}
             render={({ field }: any) => (
               <DatePicker
-                placeholderText="Select start date"
+                placeholderText="Select start time"
                 onChange={(date) => field.onChange(date)}
                 selected={field?.value}
                 showTimeSelect
@@ -141,7 +141,7 @@ const OnSelectModal = ({
             control={control}
             render={({ field }: any) => (
               <DatePicker
-                placeholderText="Select end date"
+                placeholderText="Select end time"
                 onChange={(date) => field.onChange(date)}
                 selected={field?.value}
                 showTimeSelect

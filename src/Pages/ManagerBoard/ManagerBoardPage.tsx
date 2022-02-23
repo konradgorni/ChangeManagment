@@ -3,15 +3,8 @@ import { Calendar, momentLocalizer, ToolbarProps } from 'react-big-calendar';
 import moment from 'moment';
 import { ToastContainer } from 'react-toastify';
 import { StyledWrapper } from './MangerBoardPage.styled';
-import { sendDataToDataBase } from '../../utils/sendDataToDataBase';
 import { EmptyObject } from '../../store/slice/AuthSlice';
-import {
-  IdataPickerData,
-  IselectedWorker,
-  IworkersList,
-  IEvents,
-  IEventData,
-} from './typesManagerBoard';
+import { IworkersList, IEvents, IEventData } from './typesManagerBoard';
 import AddToScheduleModal from './components/AddToScheduleModal/AddToScheduleModal';
 import ConfirmDeleteEvent from './components/AddToScheduleModal/ConfirmDeleteEvent';
 import EditScheduleEventModal from './components/EditScheduleEventModal/EditScheduleEventModal';
@@ -46,13 +39,6 @@ const ManagerBoardPage = () => {
   const [events, setEvents] = useState<IEvents[]>([]);
   const [workersList, setWorkersList] = useState<IworkersList[]>([]);
   const [workPlaceList, setWorkPlaceList] = useState<IReactSelectData[]>();
-  const [dataPickerData, setDataPickerData] = useState<
-    IdataPickerData | undefined
-  >();
-  const [selectedWorker, setSelectedWorker] = useState<
-    IselectedWorker | EmptyObject | null
-  >({});
-  const [selectedWorkPlace, setSelectedWorkPlace] = useState<string>();
   const [showUsersScheduleInfo, setShowUsersScheduleInfo] = useState<boolean>(
     false,
   );
@@ -137,31 +123,6 @@ const ManagerBoardPage = () => {
       }
     });
   };
-  const handleAdd = () => {
-    const obj = {
-      userId: selectedWorker?.userId,
-      startDate: dataPickerData?.startObj,
-      endDate: dataPickerData?.endObj,
-      workPlace: selectedWorkPlace,
-      Name: selectedWorker?.Name,
-      Surname: selectedWorker?.Surname,
-    };
-    sendDataToDataBase('schedule', obj).then(({ error }) => {
-      if (error) {
-        notyficationsHandler(
-          'Problem with adding',
-          NotyficationsStatusEnum.ERROR,
-        );
-      } else {
-        fetchData();
-        notyficationsHandler(
-          'Your event was added',
-          NotyficationsStatusEnum.SUCCESS,
-        );
-        setsShowAddToScheduleModal(false);
-      }
-    });
-  };
 
   const components = {
     event: ({ event, title }: { event: IEventData; title: string }) => (
@@ -212,12 +173,9 @@ const ManagerBoardPage = () => {
       />
       {showAddToScheduleModal && (
         <AddToScheduleModal
-          setSelectedWorker={setSelectedWorker}
           workersList={workersList}
-          setSelectedWorkPlace={setSelectedWorkPlace}
           workPlaceList={workPlaceList}
-          setDataPickerData={setDataPickerData}
-          handleAdd={handleAdd}
+          fetchData={fetchData}
           setsShowAddToScheduleModal={setsShowAddToScheduleModal}
         />
       )}

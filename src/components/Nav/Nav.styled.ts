@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ReactComponent as HamburgerIcon } from './hamburger.svg';
-import { ReactComponent as XIcon } from './x.svg';
+import { ReactComponent as HamburgerIcon } from '../../utils/icons/hamburger.svg';
+import { ReactComponent as XIcon } from '../../utils/icons/x.svg';
 
 export const StyledNav = styled.nav`
   min-height: 5vh;
