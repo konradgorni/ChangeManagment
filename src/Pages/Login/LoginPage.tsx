@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { ToastContainer } from 'react-toastify';
 import { supabase } from '../../supabase/client';
 import {
@@ -28,17 +27,9 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../utils/notificationsHandler';
+import { handleLogInData } from './utils/typesLoginPage';
+import { schema } from './utils/FormSchema';
 
-const schema = yup
-  .object({
-    email: yup.string().email('Invalid email format').required(),
-    password: yup.string().required(),
-  })
-  .required();
-interface handleLogInData {
-  email: string;
-  password: string;
-}
 const LoginPage = () => {
   const [created, isCreated] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -66,7 +57,7 @@ const LoginPage = () => {
     }
   }, [createdAccount]);
 
-  function fetchDataUser(userId: string | undefined) {
+  const fetchDataUser = (userId: string | undefined) => {
     fetchDataFromDataBase('users', 'isManager,isAdmin', {
       columnTitle: 'userId',
       columnValue: userId,
@@ -84,7 +75,7 @@ const LoginPage = () => {
         navigate('/login');
       }
     });
-  }
+  };
 
   const handleLogIn = async (data: handleLogInData) => {
     const { email, password } = data;
