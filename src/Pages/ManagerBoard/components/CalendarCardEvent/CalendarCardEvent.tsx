@@ -1,19 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { IEventData } from '../../typesManagerBoard';
-import { EmptyObject } from '../../../../store/slice/AuthSlice';
+import React from 'react';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
 import {
   StyledWrapper,
   StyledWrapperButtons,
 } from './CalendarCardEvent.styled';
-
-interface CalendarCardEventProps {
-  setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
-  title: string;
-  setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
-  setCurrentEditEventData: Dispatch<SetStateAction<IEventData | EmptyObject>>;
-  event: IEventData;
-}
+import { CalendarCardEventProps } from '../../typesManagerBoard';
 
 const CalendarCardEvent = ({
   setShowConfirmDeleteModal,

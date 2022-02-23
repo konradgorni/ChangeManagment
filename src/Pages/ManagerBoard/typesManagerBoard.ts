@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { IReactSelectData } from '../../utils/globalTypes';
+import { EmptyObject } from '../../store/slice/AuthSlice';
 
 export interface IworkersListValueObject {
   Name: string;
@@ -72,4 +73,13 @@ export interface ConfirmDeleteEventProps {
   currentIdEvent: number | undefined;
   setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
   fetchData: () => void;
+}
+// CalendarCardEvent props interface
+
+export interface CalendarCardEventProps {
+  setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
+  title: string;
+  setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
+  setCurrentEditEventData: Dispatch<SetStateAction<IEventData | EmptyObject>>;
+  event: IEventData;
 }
