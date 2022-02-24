@@ -5,9 +5,9 @@ import moment from 'moment';
 import {
   DataPickerTypeEnum,
   IdataPickerData,
+  IEditData,
 } from '../../Pages/ManagerBoard/typesManagerBoard';
 import { StyledDateWrapper, StyledWrapper } from './DataPicker.styled';
-import { IEditData } from '../../Pages/ManagerBoard/components/EditScheduleEventModal/EditScheduleEventModalTypes';
 
 type stateDateType = null | Date | undefined;
 

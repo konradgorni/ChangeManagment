@@ -21,6 +21,8 @@ import {
   NotyficationsStatusEnum,
 } from '../../utils/notificationsHandler';
 import { handleMinutesConver } from '../../utils/handleMinutesConvert';
+import { getObjectToSend } from './utils/getObjectToSend';
+import { enumerateWidth } from './utils/enumerateWidth';
 
 const ManagerBoardPage = () => {
   moment.locale('en-GB');
@@ -42,50 +44,6 @@ const ManagerBoardPage = () => {
   const [showUsersScheduleInfo, setShowUsersScheduleInfo] = useState<boolean>(
     false,
   );
-  const getObjectToSend = (data: Date | null | undefined) => {
-    const time = moment(data).format('DD-MM-YYYY HH:mm');
-    return {
-      year: time.slice(6, 10),
-      month: time.slice(3, 5),
-      date: time.slice(0, 2),
-    };
-  };
-  const enumerateWidth = ({
-    year,
-    month,
-    date,
-  }: {
-    year: string;
-    month: string;
-    date: string;
-  }) => {
-    const element = document.querySelector<HTMLElement>(
-      '.rbc-events-container',
-    );
-    const elChildren = document.querySelectorAll<HTMLElement>('.rbc-event');
-    const timeSlot = document.querySelector<HTMLElement>('.rbc-day-slot');
-    const count = events.filter((el: IEvents) => {
-      const obj = getObjectToSend(el.start);
-      if (obj) {
-        if (obj.year === year) {
-          if (obj.month === month) {
-            if (obj.date === date) {
-              return true;
-            }
-          }
-        }
-      }
-      return false;
-    });
-    if (element) {
-      if (elChildren) {
-        element.style.minWidth = `${count.length * 200}px`;
-        if (timeSlot) {
-          timeSlot.style.minWidth = `${count.length * 200}px`;
-        }
-      }
-    }
-  };
   const [currentIdEvent, setCurrentIdEvent] = useState<number | undefined>(
     undefined,
   );
@@ -136,7 +94,7 @@ const ManagerBoardPage = () => {
     ),
     toolbar: (props: ToolbarProps) => {
       const { date } = props;
-      enumerateWidth(getObjectToSend(date));
+      enumerateWidth(getObjectToSend(date, events));
       return (
         <CustomToolbar
           props={props}

@@ -108,3 +108,12 @@ export interface EditScheduleEventModalProps {
   currentEditEventData: IEventData | EmptyObject;
   fetchData: () => void;
 }
+// WrapperEvent prop interface
+
+export interface WrapperEventsProps {
+  setCurrentEditEventData: Dispatch<SetStateAction<IEventData | EmptyObject>>;
+  setShowConfirmDeleteModal: Dispatch<SetStateAction<boolean>>;
+  setShowEditScheduleModal: Dispatch<SetStateAction<boolean>>;
+  event: IEventData;
+  title: string;
+}
