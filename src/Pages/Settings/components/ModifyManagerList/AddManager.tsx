@@ -1,5 +1,4 @@
 import React from 'react';
-import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { StyledSelect } from './ModifyManagerList.styled';
@@ -13,34 +12,21 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
-
-const schema = yup.object().shape({
-  userData: yup
-    .object()
-    .shape({
-      value: yup.string().required('select options'),
-      label: yup.string(),
-    })
-    .required('This field is required.'),
-});
+import { schemaAddManager } from './utils/schems';
+import { AddManagerProps } from '../../typesSettingsPage';
 
 interface IFormData {
   userData: IReactSelectData;
 }
 
-interface AddManager {
-  ManagerListFetch: () => void;
-  userList: IReactSelectData[];
-}
-
-const AddManager = ({ userList, ManagerListFetch }: AddManager) => {
+const AddManager = ({ userList, ManagerListFetch }: AddManagerProps) => {
   const {
     handleSubmit,
     formState: { errors },
     reset,
     control,
   } = useForm<IFormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaAddManager),
   });
 
   const handleAdd = ({ userData }: { userData: IReactSelectData }) => {

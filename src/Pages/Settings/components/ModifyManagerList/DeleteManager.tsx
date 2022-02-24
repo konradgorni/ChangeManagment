@@ -1,7 +1,6 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import {
   StyledErrorMesage,
   StyledButton,
@@ -13,21 +12,9 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
+import { schemaDeleteManager } from './utils/schems';
+import { DeleteManagerProps } from '../../typesSettingsPage';
 
-const schema = yup.object().shape({
-  managerName: yup
-    .object()
-    .shape({
-      value: yup.string().required('select options'),
-      label: yup.string(),
-    })
-    .required('This field is required.'),
-});
-
-interface DeleteManagerProps {
-  managerList: IReactSelectData[];
-  ManagerListFetch: () => void;
-}
 interface IFormData {
   managerName: IReactSelectData;
 }
@@ -41,7 +28,7 @@ const DeleteManager = ({
     reset,
     control,
   } = useForm<IFormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaDeleteManager),
   });
   const handleDelete = ({
     managerName: { value },

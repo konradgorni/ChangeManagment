@@ -81,7 +81,7 @@ const EditScheduleEventModal = ({
       );
       setSelectedWorkPlace(findWorkStation[0]);
     }
-  }, []);
+  }, [workersList, workPlaceList, currentEditEventData]);
 
   const handleSave = () => {
     const objToSend = {

@@ -17,7 +17,10 @@ import {
 } from '../../../../styles/globalStylesComponents.styled';
 import { IReactSelectData } from '../../../../utils/globalTypes';
 import { updateFunction } from './utils/updateFunction';
-import { IupdateData } from '../../typesSettingsPage';
+import {
+  IModifyWorkPlacesListProps,
+  IupdateData,
+} from '../../typesSettingsPage';
 import {
   notyficationsHandler,
   NotyficationsStatusEnum,
@@ -26,10 +29,6 @@ import {
 interface IDataForm {
   workPlaceName: IReactSelectData | undefined;
   workPlaceElementRename: string;
-}
-interface IModifyWorkPlacesListProps {
-  workPlaceList: IReactSelectData[] | undefined;
-  WorkPlacesListFetch: () => void;
 }
 
 const ModifyWorkPlacesList = ({

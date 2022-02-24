@@ -13,16 +13,9 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
+import { AddNewWorkPlaceProps } from '../../typesSettingsPage';
+import { schema } from './utils/schema';
 
-const schema = yup
-  .object({
-    workPlaceName: yup.string().required().min(4),
-  })
-  .required();
-
-interface AddNewWorkPlaceProps {
-  WorkPlacesListFetch: () => void;
-}
 interface IDataForm {
   workPlaceName: string;
 }
@@ -59,9 +52,13 @@ const AddNewWorkPlace = ({ WorkPlacesListFetch }: AddNewWorkPlaceProps) => {
   return (
     <div>
       <form onSubmit={handleSubmit(saveNewWorkPlaceInDatabase)}>
-        <StyledLabel htmlFor="test">
+        <StyledLabel htmlFor="WorkPlaceName">
           <h3>WorkPlace Name</h3>
-          <StyledInput type="text" id="test" {...register('workPlaceName')} />
+          <StyledInput
+            type="text"
+            id="WorkPlaceName"
+            {...register('workPlaceName')}
+          />
         </StyledLabel>
         <StyledErrorMesage>{errors.workPlaceName?.message}</StyledErrorMesage>
         <StyledButton margin="12px 0" padding="0 5px" type="submit">
