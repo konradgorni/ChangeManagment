@@ -17,22 +17,8 @@ import {
   notyficationsHandler,
   NotyficationsStatusEnum,
 } from '../../utils/notificationsHandler';
-
-const schema = yup
-  .object({
-    email: yup.string().email('Invalid email format').required(),
-    password: yup.string().required(),
-    name: yup.string().required(),
-    surname: yup.string().required(),
-  })
-  .required();
-
-interface handleRegisterData {
-  email: string;
-  password: string;
-  name: string;
-  surname: string;
-}
+import { schema } from './utils/schema';
+import { handleRegisterData } from './utils/typesRegisterPage';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
