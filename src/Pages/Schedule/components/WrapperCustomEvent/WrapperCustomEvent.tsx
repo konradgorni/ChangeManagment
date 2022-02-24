@@ -1,27 +1,11 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import moment from 'moment';
-import { IDataToFind } from '../../SchedulePage';
 import {
   StyledWrapper,
   StyledButton,
   StyledSearchIcon,
 } from './WrapperCustomEvent.styled';
-
-interface IEvent {
-  title: string;
-  id: number;
-  start: Date;
-  end: Date;
-  workPlace: string;
-  Name: string;
-  Surname: string;
-}
-
-interface WrapperCustomEventProps {
-  event: IEvent;
-  setShowCoWorkersModal: Dispatch<SetStateAction<boolean>>;
-  setDataToFindCoWorkers: Dispatch<SetStateAction<IDataToFind | undefined>>;
-}
+import { WrapperCustomEventProps } from '../../typesSchedulePage';
 
 const WrapperCustomEvent = ({
   event,

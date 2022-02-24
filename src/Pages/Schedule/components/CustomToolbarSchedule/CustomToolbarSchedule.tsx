@@ -1,23 +1,19 @@
 import React from 'react';
-import { ToolbarProps } from 'react-big-calendar';
 import {
   StyledButtonWrapper,
   StyledTitle,
   StyledWrapper,
 } from './CustomToolbarSchedule.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
-
-interface CustomToolbarScheduleProps {
-  props: ToolbarProps;
-}
+import { CustomToolbarScheduleProps } from '../../typesSchedulePage';
 
 const CustomToolbarSchedule = ({ props }: CustomToolbarScheduleProps) => {
-  const { label } = props;
+  const { label, onNavigate } = props;
   const handleNext = () => {
-    props.onNavigate('NEXT');
+    onNavigate('NEXT');
   };
   const handlePrev = () => {
-    props.onNavigate('PREV');
+    onNavigate('PREV');
   };
   return (
     <StyledWrapper>

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import {
   StyledButtonWrapper,
@@ -6,27 +6,8 @@ import {
   StyledWrapper,
 } from './CoworkersModal.styled';
 import { StyledButton } from '../../../../styles/globalStylesComponents.styled';
-import { IDataToFind } from '../../SchedulePage';
 import { IEvents } from '../../../ManagerBoard/typesManagerBoard';
-
-interface CoworkersModalProps {
-  dataToFindCoWorkers: IDataToFind | undefined;
-  allEvents: IEvents[];
-  setShowCoWorkersModal: Dispatch<SetStateAction<boolean>>;
-}
-
-interface ICoworkersList {
-  date: string;
-  end: { hours: string; minutes: string };
-  start: { hours: string; minutes: string };
-  id: number;
-  month: string;
-  name: string;
-  surname: string;
-  title: string;
-  workPlace: string;
-  year: string;
-}
+import { CoworkersModalProps, ICoworkersList } from '../../typesSchedulePage';
 
 const CoworkersModal = ({
   dataToFindCoWorkers,

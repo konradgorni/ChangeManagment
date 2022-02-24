@@ -22,27 +22,11 @@ import {
   NotyficationsStatusEnum,
 } from '../../utils/notificationsHandler';
 import WrapperCustomEvent from './components/WrapperCustomEvent/WrapperCustomEvent';
+import {
+  IDataToFindSchedulePage,
+  IEventSchedulePage,
+} from './typesSchedulePage';
 
-export interface IDataToFind {
-  name: string;
-  surname: string;
-  workPlace: string;
-  id: number;
-  date: string;
-  month: string;
-  year: string;
-  start: { hours: string; minutes: string };
-  end: { hours: string; minutes: string };
-}
-interface IEvent {
-  title: string;
-  id: number;
-  start: Date;
-  end: Date;
-  workPlace: string;
-  Name: string;
-  Surname: string;
-}
 const SchedulePage = () => {
   const localizer = momentLocalizer(moment);
   const user: any = useSelector((state: RootState) => state.auth.value);
@@ -50,7 +34,7 @@ const SchedulePage = () => {
   const [allEvents, setAllEvents] = useState<IEvents[]>([]);
   const [showCoWorkersModal, setShowCoWorkersModal] = useState<boolean>(false);
   const [dataToFindCoWorkers, setDataToFindCoWorkers] = useState<
-    IDataToFind | undefined
+    IDataToFindSchedulePage | undefined
   >();
   const [showSelectModal, setShowSelectModal] = useState(false);
   const [
@@ -90,7 +74,7 @@ const SchedulePage = () => {
       ),
     },
     toolbar: (props: ToolbarProps) => <CustomToolbarSchedule props={props} />,
-    event: ({ event }: { event: IEvent }) => (
+    event: ({ event }: { event: IEventSchedulePage }) => (
       <WrapperCustomEvent
         setShowCoWorkersModal={setShowCoWorkersModal}
         event={event}

@@ -1,16 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { DateHeaderProps } from 'react-big-calendar';
+import React from 'react';
 import {
   StyledIcon,
   StyledLabel,
   StyledWrapper,
 } from './CustomDateHeaderDay.styled';
-
-interface CustomDateHeaderDayProps {
-  props: DateHeaderProps;
-  setShowSelectModal: Dispatch<SetStateAction<boolean>>;
-  setSelectModalData: Dispatch<SetStateAction<DateHeaderProps | null>>;
-}
+import { CustomDateHeaderDayProps } from '../../typesSchedulePage';
 
 const CustomDateHeaderDay = ({
   props,

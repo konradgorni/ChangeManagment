@@ -14,15 +14,15 @@ const CustomToolbar = ({
   setShowUsersScheduleInfo,
   setCurrentDateView,
 }: CustomToolbarProps) => {
-  const { label, date } = props;
+  const { label, date, onNavigate } = props;
 
   const handleNext = () => {
     setShowUsersScheduleInfo(false);
-    props.onNavigate('NEXT');
+    onNavigate('NEXT');
   };
   const handlePrev = () => {
     setShowUsersScheduleInfo(false);
-    props.onNavigate('PREV');
+    onNavigate('PREV');
   };
 
   return (

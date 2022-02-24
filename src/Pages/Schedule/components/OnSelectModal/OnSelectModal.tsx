@@ -1,9 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { DateHeaderProps } from 'react-big-calendar';
 import DatePicker from 'react-datepicker';
 import {
   StyledWrapper,
@@ -22,17 +21,10 @@ import {
   NotyficationsStatusEnum,
 } from '../../../../utils/notificationsHandler';
 import { handleMinutesConver } from '../../../../utils/handleMinutesConvert';
-
-interface OnSelectModalProps {
-  dataObj: DateHeaderProps | null;
-  setShowSelectModal: Dispatch<SetStateAction<boolean>>;
-  user: any;
-}
-
-interface IFormData {
-  startTimeRange: string;
-  endTimeRange: string;
-}
+import {
+  IFormDataOnSelectModal,
+  OnSelectModalProps,
+} from '../../typesSchedulePage';
 
 const OnSelectModal = ({
   dataObj,
@@ -55,11 +47,11 @@ const OnSelectModal = ({
     formState: { errors },
     reset,
     control,
-  } = useForm<IFormData>({
+  } = useForm<IFormDataOnSelectModal>({
     resolver: yupResolver(schema),
   });
 
-  const handleForm = (data: IFormData) => {
+  const handleForm = (data: IFormDataOnSelectModal) => {
     if (dataObj !== null) {
       const { date } = dataObj;
       const time = moment(date).format('DD-MM-YYYY HH:mm');
@@ -126,7 +118,7 @@ const OnSelectModal = ({
               <DatePicker
                 placeholderText="Select start time"
                 onChange={(date) => field.onChange(date)}
-                selected={field?.value}
+                selected={field.value}
                 showTimeSelect
                 showTimeSelectOnly
                 timeIntervals={15}
@@ -143,7 +135,7 @@ const OnSelectModal = ({
               <DatePicker
                 placeholderText="Select end time"
                 onChange={(date) => field.onChange(date)}
-                selected={field?.value}
+                selected={field.value}
                 showTimeSelect
                 showTimeSelectOnly
                 timeIntervals={15}
@@ -159,7 +151,6 @@ const OnSelectModal = ({
         <StyledButtonsWrapper>
           <StyledButton type="submit">Submit</StyledButton>
           <StyledButton
-            margin=""
             background="red"
             onClick={() => setShowSelectModal(false)}
           >
