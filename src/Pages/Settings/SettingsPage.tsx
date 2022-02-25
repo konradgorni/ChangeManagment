@@ -45,7 +45,7 @@ const SettingsPage = () => {
         WorkPlacesListFetch={WorkPlacesListFetch}
         workPlaceList={workPlaceList}
       />
-      <StyledTitle>Mangar List</StyledTitle>
+      <StyledTitle>Manager List</StyledTitle>
 
       <ModifyManagerList />
       <ToastContainer />

@@ -10,6 +10,7 @@ export const StyledWrapper = styled.div`
   color: white;
   padding: 15px 0;
   border-radius: 5px;
+  border: 2px solid #fab700;
 
   background-color: #212121;
   h2 {

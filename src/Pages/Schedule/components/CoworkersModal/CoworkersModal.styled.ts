@@ -37,9 +37,9 @@ export const StyledWrapper = styled.div`
     width: 45vh;
   }
 `;
-export const StyledWorkerCard = styled.div`
+export const StyledWorkerCard = styled.div<{ user?: boolean }>`
   margin: 20px 0;
-  color: white;
+  color: ${({ user }) => (user ? '#fab700' : 'white')};
   p {
     margin: 2px 0;
     font-size: 18px;

@@ -74,7 +74,7 @@ const CoworkersModal = ({
   return (
     <StyledWrapper>
       <h2>Your Coworkers</h2>
-      <StyledWorkerCard>
+      <StyledWorkerCard user>
         <h3>{`${dataToFindCoWorkers?.name} ${dataToFindCoWorkers?.surname}`}</h3>
         <p>{dataToFindCoWorkers?.workPlace}</p>
         <p>{`${dataToFindCoWorkers?.start.hours}:${dataToFindCoWorkers?.start.minutes} - ${dataToFindCoWorkers?.end.hours}:${dataToFindCoWorkers?.end.minutes}`}</p>
