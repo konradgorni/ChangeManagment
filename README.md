@@ -7,7 +7,7 @@
 
 ## Demo
 
-https://change-managment-33esoi9rw-konradgorni.vercel.app/login
+https://changemanagment.vercel.app/login
 
 
 ## Description
