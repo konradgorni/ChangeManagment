@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '@supabase/supabase-js';
 
 type payload = null | User;
-type payload2 = null | boolean;
 export type EmptyObject = Record<any, never>;
 interface initialStateAuth {
   value: payload | Record<string, EmptyObject>;
@@ -23,10 +22,10 @@ export const authSlice = createSlice({
     saveUser: (state, action: PayloadAction<payload>) => {
       state.value = action.payload;
     },
-    updateManager: (state, action: PayloadAction<any>) => {
+    updateManager: (state, action: PayloadAction<boolean>) => {
       state.isManager = action.payload;
     },
-    updateAdmin: (state, action: PayloadAction<any>) => {
+    updateAdmin: (state, action: PayloadAction<boolean>) => {
       state.isAdmin = action.payload;
     },
   },
