@@ -12,7 +12,7 @@ https://change-managment-33esoi9rw-konradgorni.vercel.app/login
 
 ## Description
 
-Application to create and manage working hours .The application has 3 views : admin,manager,employee.
+Application to create and manage working hours .The application has 3 views : admin,manager,employee.This app is mvp version.
 
 
 
