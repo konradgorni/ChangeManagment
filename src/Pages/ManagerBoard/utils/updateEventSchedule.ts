@@ -14,7 +14,7 @@ export const updateEventSchedule = async (
   updateDate: IUpdateDate,
   id: number,
 ) => {
-  const { data, error } = await updateRowDataBase('schedule', updateDate, {
+  const { error } = await updateRowDataBase('schedule', updateDate, {
     columnTitle: 'id',
     columnValue: id,
   });
