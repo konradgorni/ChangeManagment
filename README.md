@@ -1,10 +1,3 @@
-
-[![Change-Managment.png](https://i.postimg.cc/BbNkHfcR/Change-Managment.png)](https://postimg.cc/ctgFGjzc)
-
-
-
-
-
 ## Demo
 
 https://changemanagment.vercel.app/login
@@ -22,17 +15,17 @@ login:employee1@wp.pl
 
 password:password123!@#
 
-[![schedule-User.png](https://i.postimg.cc/tgQx1phg/schedule-User.png)](https://postimg.cc/fVCLp4q4)
+![scheduleUser](https://user-images.githubusercontent.com/59260803/155872067-40fb9af5-f8d3-472a-9fe2-5bd34400a3cc.png)
 
 ## Report a change 
 After pressing plus icon employee can inform manager about day off or time range when want work.
 
-[![reporta-Change.png](https://i.postimg.cc/SsZRGhzC/reporta-Change.png)](https://postimg.cc/G8ybc6Km)
+![reportaChange](https://user-images.githubusercontent.com/59260803/155872092-307fb485-0b62-4def-9d6a-723936552aa8.png)
 
 ## CoWorkers
 Show when current employee work and his colleagues
 
-[![coworkers.png](https://i.postimg.cc/tT45CFQb/coworkers.png)](https://postimg.cc/p938shLc)
+![coworkers](https://user-images.githubusercontent.com/59260803/155872100-d5e6378d-775f-4a20-a3b5-6e3042be3628.png)
 
 # Managerboard view
 
@@ -40,18 +33,18 @@ login:manager@wp.pl
 
 password:password123!@#
 
-[![managerboard.png](https://i.postimg.cc/SsjkkzJY/managerboard.png)](https://postimg.cc/5YcZmy5f)
+![managerboard](https://user-images.githubusercontent.com/59260803/155872134-345c8051-114f-4df4-8071-173a11ad66b4.png)
 
 ## Addition of change
-[![workers-List-Add-Manager-Board.png](https://i.postimg.cc/ZR3ZWzxJ/workers-List-Add-Manager-Board.png)](https://postimg.cc/KkZCWVWW)
+![workersListAddManagerBoard](https://user-images.githubusercontent.com/59260803/155872158-7dfc6b2a-04ff-4d79-b831-4e3fcc5f1a8b.png)
 
 ## Edit or delete event
 
-[![manager-Board-Events.png](https://i.postimg.cc/sfSz4WGK/manager-Board-Events.png)](https://postimg.cc/YjpTph3m)
+![managerBoardEvents](https://user-images.githubusercontent.com/59260803/155872204-e2bf1752-20b7-4dd8-b9c9-a4082b4f02c2.png)
 
 ## Notes (employee report)
 
-[![userInfo.png](https://i.postimg.cc/gJ7BCgwQ/userInfo.png)](https://postimg.cc/bDQTbH99)
+![userInfo](https://user-images.githubusercontent.com/59260803/155872216-d95a0a4c-f03c-4867-b8b9-98c94b377746.png)
 
 # Admin view (settings)
 
@@ -61,7 +54,7 @@ password:password123!@#
 
 Admin can modify WorkPlace List and who's the manager.
 
-[![settings-View-For-Admin.png](https://i.postimg.cc/pTp7Twzq/settings-View-For-Admin.png)](https://postimg.cc/FdXGCnPL)
+![settingsViewForAdmin](https://user-images.githubusercontent.com/59260803/155872221-3aaea54d-28e4-41b5-9cef-a7d726fa7c62.png)
 
 
 
